@@ -1,0 +1,31 @@
+.numbers,
+.operations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  .number-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    user-select: none;
+  }
+
+  .number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+    background-color: black;
+    font-size: 2rem;
+    border-radius: 25px;
+    color: beige;
+    width: 100px;
+  }
+
+  div:active {
+    transform: scale(1.02);
+  }
+}
