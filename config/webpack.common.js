@@ -7,7 +7,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Calculator",
+      template: "./src/index.html",
     }),
   ],
 
@@ -20,9 +20,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css/i,
-        include: path.resolve(__dirname, "../src/styles"), // FIXME: css loader
-        use: ["style-loader", "css-loader"],
+        test: /\.s[ac]ss$/i,
+        include: path.resolve(__dirname, "../src/styles"),
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
