@@ -2,17 +2,27 @@ import { calculator, Calculator } from "../calculator/calculator";
 import { updateScreen } from "../screen/updateScreen";
 
 export class AddCommand extends Calculator {
-  constructor(addOperand) {
+  constructor(addOperand) { // addOperand == calculator.value
     super();
-    this.addOperand = +addOperand;
+    this.addOperand = addOperand;
   }
 
-  execute(value) {
-    return +(value + this.addOperand);
+  execute(value, previousValue) {
+    if (value === null) {
+      return [0, previousValue];
+    } else {
+      updateScreen(previousValue + this.addOperand);
+      return [0, previousValue + this.addOperand];
+    }
   }
 
-  undo(value) {
-    return +value - this.addOperand;
+  undo(value, previousValue) {
+    console.log("Undo from operations");
+    if (value === 0 || value === null) {
+      return [null, previousValue - this.addOperand];
+    } else {
+      return [value, previousValue];
+    }
   }
 }
 
@@ -22,8 +32,13 @@ export class MultiplyCommand extends Calculator {
     this.multiplyOperand = +multiplyOperand;
   }
 
-  execute(value) {
-    return +(value * this.multiplyOperand);
+  execute(value, previousValue) {
+    if (value === null) {
+      return [0, previousValue];
+    } else {
+      updateScreen(previousValue * this.multiplyOperand);
+      return [0, previousValue * this.multiplyOperand];
+    }
   }
 
   undo(value) {
@@ -38,6 +53,7 @@ export class DivideCommand extends Calculator {
   }
 
   execute(value) {
+    calculator.previousValue = value;
     return +value / this.divideOperand;
   }
 
@@ -53,6 +69,7 @@ export class SubtractCommand extends Calculator {
   }
 
   execute(value) {
+    calculator.previousValue = value;
     return +value - this.subtractOperand;
   }
 
@@ -67,8 +84,10 @@ export class AllClearCommand extends Calculator {
   }
 
   execute() {
+    calculator.previousValue = 0;
+    calculator.value = null;
     calculator.operations = [];
-    return 0;
+    return 0; // FIXME: return proper resetters
   }
 
   undo(value) {
@@ -109,4 +128,5 @@ export function arithmeticCommandSelector(event) {
     default:
       break;
   }
+  console.log(calculator);
 }

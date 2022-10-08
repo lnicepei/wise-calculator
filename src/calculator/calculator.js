@@ -3,22 +3,26 @@ import "../styles/background.scss";
 
 export class Calculator {
   constructor() {
-    // this.firstOperand = 0;
-    // this.secondOperand = null; //TODO: what to do with those operands??
-    this.value = 0;
+    this.value = null;
     this.previousValue = null;
     this.operations = [];
   }
 
   execute(command) {
-    if (this.operations[this.operations.length - 1] !== command)
-      this.operations.push(command);
-    this.value = command.execute(this.value);
+    this.operations.push(command);
+    [this.value, this.previousValue] = command.execute(
+      this.value,
+      this.previousValue,
+      this.operations
+    );
   }
 
   undo() {
     const lastCommand = this.operations.pop();
-    this.value = lastCommand.undo(this.value) || 0; // TODO: undo all operations should return this.value = 0
+    [this.value, this.previousValue] = lastCommand?.undo(
+      this.value,
+      this.previousValue
+    ) || [null, null];
   }
 }
 
