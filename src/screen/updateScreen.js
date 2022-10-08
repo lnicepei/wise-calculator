@@ -1,10 +1,11 @@
 import { calculator } from "../calculator/calculator";
 import "../styles/screen.scss";
 
-export function updateScreen() {
-  console.log(calculator.operations)
+export function updateScreen(value) {
   const screen = document.querySelector(".screen");
-  screen.textContent = `${calculator.value}`;
+  screen.textContent = value || `${
+    calculator.value ?? calculator.previousValue ?? 0
+  }`;
 }
 
 updateScreen();
