@@ -2,39 +2,51 @@ import { calculator, Calculator } from "../calculator/calculator";
 import { updateScreen } from "../screen/updateScreen";
 import { NumberButtonCommand } from "./numbers";
 
+export class FirstCommand extends Calculator {
+  constructor(value, previousValue) {
+    super();
+    this.value = value;
+    this.previousValue = previousValue;
+  }
+
+  execute() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue;
+  }
+
+  undo() {}
+}
+
 export class AddCommand extends Calculator {
   constructor(value, previousValue) {
     // encapsulated values of  calculator.value и calculator.previousValue
     super();
     this.value = value;
     this.previousValue = previousValue;
-    this.operands = [value, previousValue];
   }
-// should I pass any arguments here???????
-  execute(value, previousValue, operations) {
-    // if (previousValue === null && value === null) {
-    //   return [value, previousValue, operations];
-    // } else if (value === null) {
-    //   return [0, previousValue, operations];
-    // } else {
-    //   updateScreen(previousValue + this.value);
-    //   return [0, previousValue + this.value, operations];
-    // }
-    if (previousValue === null && value === null) {
-      return [value, previousValue, operations];
-    } else if (value === null) {
-      return [0, this.operands[1], operations];
+
+  execute() {
+    if (this.previousValue === null && this.value === null) {
+      // return [this.value, this.previousValue];
+      calculator.value = this.value;
+      calculator.previousValue = this.previousValue;
+    } else if (this.value === null) {
+      // return [0, this.previousValue];
+      calculator.value = 0;
+      calculator.previousValue = this.previousValue;
     } else {
-      updateScreen(previousValue + this.value);
-      return [0, this.operands[0] + this.operands[1], operations];
+      updateScreen(this.previousValue + this.value);
+      // return [0, this.value + this.previousValue];
+      calculator.value = 0;
+      calculator.previousValue = this.value + this.previousValue;
     }
   }
 
-  undo(value, previousValue, operations) {
-    if (value === 0 || value === null) {
-      return [null, previousValue - this.value, operations];
+  undo() {
+    if (this.value === 0 || this.value === null) {
+      return [null, this.previousValue - this.value];
     } else {
-      return [0, value ?? previousValue - this.value, operations];
+      return [0, this.value ?? this.previousValue - this.value];
     }
   }
 }
@@ -44,35 +56,29 @@ export class MultiplyCommand extends Calculator {
     super();
     this.value = value;
     this.previousValue = previousValue;
-    this.operands = [value, previousValue]
   }
 
-  execute(value, previousValue, operations) {
-    // if (previousValue === null && value === null) {
-    //   return [value, previousValue, operations];
-    // } else if (value === null) {
-    //   return [0, previousValue, operations];
-    // } else {
-    //   updateScreen(previousValue * this.value);
-    //   return [0, previousValue * this.value, operations];
-    // }
-    // return [0, value + this.value, operations];
-    if (previousValue === null && value === null) {
-      return [value, previousValue, operations];
-    } else if (value === null) {
-      return [0, this.operands[1], operations];
+  execute() {
+    if (this.previousValue === null && this.value === null) {
+      calculator.value = this.value;
+      calculator.previousValue = this.previousValue;
+      // return;
+    } else if (this.value === null) {
+      calculator.value = 0;
+      calculator.previousValue = this.previousValue;
+      // return;
     } else {
-      updateScreen(previousValue + this.value);
-      return [0, this.operands[0] + this.operands[1], operations];
+      updateScreen(this.previousValue * this.value);
+      calculator.value = 0;
+      calculator.previousValue = this.value * this.previousValue;
     }
   }
 
-  undo(value, previousValue, operations) {
-    if (value === 0 || value === null) {
-      return [previousValue, previousValue / this.value, operations];
+  undo() {
+    if (this.value === 0 || this.value === null) {
+      return [this.previousValue, this.previousValue / this.value];
     } else {
-      console.log(previousValue, this.value);
-      return [0, value ?? previousValue / this.value, operations];
+      return [0, this.value ?? this.previousValue / this.value];
     }
   }
 }
@@ -110,19 +116,26 @@ export class SubtractCommand {
 }
 
 export class AllClearCommand extends Calculator {
-  constructor(value, previousValue, operations) {
+  constructor(value, previousValue, operations, operationSigns) {
     super();
     this.value = value;
     this.previousValue = previousValue;
     this.operations = operations;
+    this.operationSigns = operationSigns;
   }
 
   execute() {
-    return [null, null, []];
+    calculator.value = null;
+    calculator.previousValue = null;
+    calculator.operations = [];
+    calculator.operationSigns = [];
   }
 
   undo() {
-    return [this.value, this.previousValue, this.operations];
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    calculator.operations = this.operations;
+    calculator.operationSigns = this.operationSigns;
   }
 }
 
@@ -135,11 +148,14 @@ for (let element of operations) {
 }
 
 export function arithmeticCommandSelector(event) {
-  // TODO: Выполнять операцию только тогда, когда есть два операнда??????Г а так: проверять это условие в нажимальщике кнопок
-  switch (event?.target?.textContent || event) {
+  // TODO: Если (есть операции) то выполнить последнюю и поставить текущую в массив. если нет, то поставить текущую в массив и не выполнять
+  switch (
+    calculator.operationSigns[calculator.operationSigns.length - 1] ||
+    0
+  ) {
     case "+":
       calculator.execute(
-        new AddCommand(+calculator.value, +calculator.previousValue)
+        new AddCommand(calculator.value, calculator.previousValue)
       );
       break;
     case "-":
@@ -147,7 +163,7 @@ export function arithmeticCommandSelector(event) {
       break;
     case "*":
       calculator.execute(
-        new MultiplyCommand(+calculator.value, +calculator.previousValue)
+        new MultiplyCommand(calculator.value, calculator.previousValue)
       );
       break;
     case "/":
@@ -158,7 +174,8 @@ export function arithmeticCommandSelector(event) {
         new AllClearCommand(
           calculator.value,
           calculator.previousValue,
-          calculator.operations
+          calculator.operations,
+          calculator.operationSigns
         )
       );
       updateScreen();
@@ -167,8 +184,14 @@ export function arithmeticCommandSelector(event) {
       calculator.undo();
       updateScreen();
       break;
+    case 0:
+      calculator.execute(
+        new FirstCommand(calculator.value, calculator.previousValue)
+      );
+      break;
     default:
       break;
   }
+  calculator.operationSigns.push(event?.target?.textContent || event);
   console.log(calculator);
 }
