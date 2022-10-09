@@ -1,56 +1,55 @@
 import { updateScreen } from "../screen/updateScreen";
 import { Calculator, calculator } from "../calculator/calculator";
 import "../styles/numbers.scss";
-// Хранить значение в виде строки (для удобства добавления .)
 
 export class NumberButtonCommand extends Calculator {
-  constructor(numberButton) {
+  constructor(numberButton, value, previousValue) {
     super();
     this.numberButton = numberButton;
+    this.value = value;
+    this.previousValue = previousValue;
   }
-
-  execute(value, previousValue, operations) {
-    if (value > 1000000000000000 || previousValue > 1000000000000000)
-      return [value, previousValue, operations];
+  execute() {
+    if (this.value > 1000000000000000 || this.previousValue > 1000000000000000)
+      return;
 
     if (this.numberButton === ".") {
-      if (value !== null && !value.toString().includes(".")) {
-        return [value + ".", previousValue, operations];
+      if (this.value !== null && !this.value.toString().includes(".")) {
+        calculator.value = this.value + ".";
+        calculator.previousValue = this.previousValue;
+        return;
       }
-      if (!previousValue.toString().includes(".")) {
-        return [value, previousValue + ".", operations];
+      if (!this.previousValue.toString().includes(".")) {
+        calculator.value = this.value;
+        calculator.previousValue = this.previousValue + ".";
+        return;
       }
-      return [value, previousValue, operations];
+      // TODO: Rewrite undo methods
+      return;
     }
 
-    if (previousValue === null && value === null) {
-      return [value, +this.numberButton, operations];
-    } else if (value === null) {
-      return [value, +(previousValue + this.numberButton), operations];
+    if (this.previousValue === null && this.value === null) {
+      calculator.value = this.value;
+      calculator.previousValue = +this.numberButton;
+    } else if (this.value === null) {
+      calculator.value = this.value;
+      calculator.previousValue = +(this.previousValue + this.numberButton);
     } else {
-      return [+(value + this.numberButton), previousValue, operations];
+      calculator.value = +(this.value + this.numberButton);
+      calculator.previousValue = this.previousValue;
     }
   }
 
-  undo(value, previousValue, operations) {
-    if (previousValue === null && value === null) {
-      return [value, previousValue, operations];
-    } else if (value === null || value === 0) {
-      return [
-        null,
-        +previousValue
-          .toString()
-          .substring(0, previousValue.toString().length - 1) || null,
-        operations,
-      ];
+  undo() {
+    if (this.previousValue === null && this.value === null) {
+      return [this.value, this.previousValue];
+    } else if (this.value === null || this.value === 0) {
+      return [null, +this.previousValue.toString().slice(0, -1) || null];
     } else {
-      return [
-        +value.toString().substring(0, value.toString().length - 1) || null,
-        previousValue,
-        operations,
-      ];
+      return [+this.value.toString().slice(0, -1) || null, previousValue];
     }
   }
+  // TODO: Rewrite undo methods
 }
 
 const numbers = document.querySelectorAll(".number");
@@ -60,7 +59,13 @@ for (let number of numbers) {
 }
 
 function numberCommand(event) {
-  calculator.execute(new NumberButtonCommand(event.target.textContent));
+  calculator.execute(
+    new NumberButtonCommand(
+      event.target.textContent,
+      calculator.value,
+      calculator.previousValue
+    )
+  );
   console.log(calculator);
   updateScreen();
 }
