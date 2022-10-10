@@ -10,19 +10,15 @@ export class Calculator {
   }
 
   execute(command) {
-    // this.operations.push(command);
-    return command.execute(this.value, this.previousValue);
-    // Execute penultimate operation?
+    this.operations.push(command);
+    return command.execute();
   }
 
   undo() {
     const lastCommand = this.operations.pop();
-    [this.value, this.previousValue] = lastCommand?.undo(
-      this.value,
-      this.previousValue
-    ) || [null, null, []];
+    this.operationSigns.pop();
+    return lastCommand.undo();
   }
-  // TODO: Rewrite undo methods
 }
 
 const calculator = new Calculator();
