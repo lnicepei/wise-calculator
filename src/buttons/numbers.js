@@ -3,25 +3,26 @@ import { Calculator, calculator } from "../calculator/calculator";
 import "../styles/numbers.scss";
 
 export class NumberButtonCommand extends Calculator {
-  constructor(numberButton, value, previousValue) {
+  constructor(numberButton) {
     super();
     this.numberButton = numberButton;
-    this.value = value;
-    this.previousValue = previousValue;
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
   }
+
   execute() {
     if (this.value > 1000000000000000 || this.previousValue > 1000000000000000)
       return;
 
     if (this.numberButton === ".") {
       if (this.value !== null && !this.value.toString().includes(".")) {
-        calculator.value = this.value + ".";
+        calculator.value = parseFloat(this.value + ".");
         calculator.previousValue = this.previousValue;
         return;
       }
       if (!this.previousValue.toString().includes(".")) {
         calculator.value = this.value;
-        calculator.previousValue = this.previousValue + ".";
+        calculator.previousValue = parseFloat(this.previousValue + ".");
         return;
       }
       // TODO: Rewrite undo methods
@@ -42,14 +43,17 @@ export class NumberButtonCommand extends Calculator {
 
   undo() {
     if (this.previousValue === null && this.value === null) {
-      return [this.value, this.previousValue];
+      calculator.value = this.value;
+      calculator.previousValue = this.previousValue;
     } else if (this.value === null || this.value === 0) {
-      return [null, +this.previousValue.toString().slice(0, -1) || null];
+      calculator.value = null;
+      calculator.previousValue =
+        +this.previousValue.toString().slice(0, -1) || null;
     } else {
-      return [+this.value.toString().slice(0, -1) || null, previousValue];
+      calculator.value = +this.value.toString().slice(0, -1) || null;
+      calculator.previousValue = this.previousValue;
     }
   }
-  // TODO: Rewrite undo methods
 }
 
 const numbers = document.querySelectorAll(".number");
@@ -59,13 +63,7 @@ for (let number of numbers) {
 }
 
 function numberCommand(event) {
-  calculator.execute(
-    new NumberButtonCommand(
-      event.target.textContent,
-      calculator.value,
-      calculator.previousValue
-    )
-  );
+  calculator.execute(new NumberButtonCommand(event.target.textContent));
   console.log(calculator);
   updateScreen();
 }
