@@ -5,7 +5,7 @@
 
 .numbers,
 .advanced-operations,
-.simple-operations {
+.arithmetic-operations {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -33,7 +33,7 @@
   background-color: #5a5b5c;
 }
 
-.simple-operations {
+.arithmetic-operations {
   display: flex;
   flex-direction: column;
   background-color: #fe9d08;
