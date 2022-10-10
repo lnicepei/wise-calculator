@@ -54,6 +54,8 @@ export class NumberButtonCommand extends Calculator {
       calculator.previousValue = this.previousValue;
     }
   }
+
+  // TODO: Rewrite undo methods
 }
 
 const numbers = document.querySelectorAll(".number");
