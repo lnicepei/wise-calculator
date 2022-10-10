@@ -3,10 +3,10 @@ import { updateScreen } from "../screen/updateScreen";
 import { NumberButtonCommand } from "./numbers";
 
 export class FirstCommand extends Calculator {
-  constructor(value, previousValue) {
+  constructor() {
     super();
-    this.value = value;
-    this.previousValue = previousValue;
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
   }
 
   execute() {
@@ -18,25 +18,22 @@ export class FirstCommand extends Calculator {
 }
 
 export class AddCommand extends Calculator {
-  constructor(value, previousValue) {
-    // encapsulated values of  calculator.value и calculator.previousValue
+  constructor() {
     super();
-    this.value = value;
-    this.previousValue = previousValue;
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
   }
 
   execute() {
+    console.log("AddCommand executed");
     if (this.previousValue === null && this.value === null) {
-      // return [this.value, this.previousValue];
       calculator.value = this.value;
       calculator.previousValue = this.previousValue;
     } else if (this.value === null) {
-      // return [0, this.previousValue];
       calculator.value = 0;
       calculator.previousValue = this.previousValue;
     } else {
       updateScreen(this.previousValue + this.value);
-      // return [0, this.value + this.previousValue];
       calculator.value = 0;
       calculator.previousValue = this.value + this.previousValue;
     }
@@ -44,29 +41,31 @@ export class AddCommand extends Calculator {
 
   undo() {
     if (this.value === 0 || this.value === null) {
-      return [null, this.previousValue - this.value];
+      calculator.value = null;
+      calculator.previousValue = this.previousValue - this.value;
     } else {
-      return [0, this.value ?? this.previousValue - this.value];
+      calculator.value = 0;
+      calculator.previousValue = this.value ?? this.previousValue - this.value;
     }
   }
+
+  validate() {}
 }
 
 export class MultiplyCommand extends Calculator {
-  constructor(value, previousValue) {
+  constructor() {
     super();
-    this.value = value;
-    this.previousValue = previousValue;
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
   }
 
   execute() {
     if (this.previousValue === null && this.value === null) {
       calculator.value = this.value;
       calculator.previousValue = this.previousValue;
-      // return;
     } else if (this.value === null) {
       calculator.value = 0;
       calculator.previousValue = this.previousValue;
-      // return;
     } else {
       updateScreen(this.previousValue * this.value);
       calculator.value = 0;
@@ -76,9 +75,11 @@ export class MultiplyCommand extends Calculator {
 
   undo() {
     if (this.value === 0 || this.value === null) {
-      return [this.previousValue, this.previousValue / this.value];
+      calculator.value = null;
+      calculator.previousValue = this.previousValue / this.value;
     } else {
-      return [0, this.value ?? this.previousValue / this.value];
+      calculator.value = 0;
+      calculator.previousValue = this.value ?? this.previousValue / this.value;
     }
   }
 }
@@ -116,12 +117,12 @@ export class SubtractCommand {
 }
 
 export class AllClearCommand extends Calculator {
-  constructor(value, previousValue, operations, operationSigns) {
+  constructor() {
     super();
-    this.value = value;
-    this.previousValue = previousValue;
-    this.operations = operations;
-    this.operationSigns = operationSigns;
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+    this.operations = calculator.operations;
+    this.operationSigns = calculator.operationSigns;
   }
 
   execute() {
@@ -148,50 +149,44 @@ for (let element of operations) {
 }
 
 export function arithmeticCommandSelector(event) {
-  // TODO: Если (есть операции) то выполнить последнюю и поставить текущую в массив. если нет, то поставить текущую в массив и не выполнять
-  switch (
-    calculator.operationSigns[calculator.operationSigns.length - 1] ||
-    0
+  const operation = event?.target?.textContent || event;
+  const previousOperation =
+    calculator.operations[calculator.operations.length - 1];
+
+  if (
+    previousOperation instanceof NumberButtonCommand ||
+    operation === "undo"
   ) {
-    case "+":
-      calculator.execute(
-        new AddCommand(calculator.value, calculator.previousValue)
-      );
-      break;
-    case "-":
-      calculator.execute(new SubtractCommand(calculator.value));
-      break;
-    case "*":
-      calculator.execute(
-        new MultiplyCommand(calculator.value, calculator.previousValue)
-      );
-      break;
-    case "/":
-      calculator.execute(new DivideCommand(calculator.value));
-      break;
-    case "AC":
-      calculator.execute(
-        new AllClearCommand(
-          calculator.value,
-          calculator.previousValue,
-          calculator.operations,
-          calculator.operationSigns
-        )
-      );
-      updateScreen();
-      break;
-    case "undo":
-      calculator.undo();
-      updateScreen();
-      break;
-    case 0:
-      calculator.execute(
-        new FirstCommand(calculator.value, calculator.previousValue)
-      );
-      break;
-    default:
-      break;
+    switch (calculator.operationSigns.at(-1) || 0) {
+      case "+":
+        calculator.execute(new AddCommand());
+        break;
+      case "-":
+        calculator.execute(new SubtractCommand());
+        break;
+      case "*":
+        calculator.execute(new MultiplyCommand());
+        break;
+      case "/":
+        calculator.execute(new DivideCommand());
+        break;
+      case "AC":
+        calculator.execute(new AllClearCommand());
+        updateScreen();
+        break;
+      case "undo":
+        calculator.undo();
+        updateScreen();
+        break;
+      case 0:
+        calculator.execute(new FirstCommand());
+        break;
+      default:
+        break;
+    }
+    calculator.operationSigns.push(operation);
+  } else {
+    calculator.operationSigns.splice(-1, 1, operation);
   }
-  calculator.operationSigns.push(event?.target?.textContent || event);
   console.log(calculator);
 }
