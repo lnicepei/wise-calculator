@@ -1,4 +1,5 @@
 import "./styles/rewrite.scss";
-import "./buttons/operations";
+import "./operations/arithmeticOperations";
+import "./operations/advancedOperations";
 import "./buttons/numbers";
 import "./screen/updateScreen";
