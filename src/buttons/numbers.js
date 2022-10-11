@@ -10,35 +10,19 @@ export class NumberButtonCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.value > 1000000000000000 || this.previousValue > 1000000000000000)
-      return;
+  executeFirstOperation() {
+    calculator.previousValue = +this.numberButton;
+    updateScreen();
+  }
 
-    if (this.numberButton === ".") {
-      if (this.value !== null && !this.value.toString().includes(".")) {
-        calculator.value = parseFloat(this.value + ".");
-        calculator.previousValue = this.previousValue;
-        return;
-      }
-      if (!this.previousValue.toString().includes(".")) {
-        calculator.value = this.value;
-        calculator.previousValue = parseFloat(this.previousValue + ".");
-        return;
-      }
-      // TODO: Rewrite undo methods
-      return;
-    }
+  executeWithOneArg() {
+    calculator.previousValue = +(this.previousValue + this.numberButton);
+    updateScreen();
+  }
 
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = +this.numberButton;
-    } else if (this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = +(this.previousValue + this.numberButton);
-    } else {
-      calculator.value = +(this.value + this.numberButton);
-      calculator.previousValue = this.previousValue;
-    }
+  executeWithTwoArgs() {
+    calculator.value = +(this.value + this.numberButton);
+    updateScreen();
   }
 
   undo() {
