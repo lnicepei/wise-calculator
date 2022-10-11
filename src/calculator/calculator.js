@@ -23,7 +23,12 @@ export class Calculator {
   undo() {
     const lastCommand = this.operations.pop();
     this.operationSigns.pop();
-    return lastCommand.undo();
+    if (this.value === 0 || this.value === null) {
+      lastCommand.undoWithOneArg();
+    } else {
+      lastCommand.undoWithTwoArgs();
+    }
+    lastCommand.undo();
   }
 }
 
