@@ -3,6 +3,16 @@ import { calculator, Calculator } from "../calculator/calculator";
 import { updateScreen } from "../screen/updateScreen";
 import { arithmeticCommandSelector } from "./arithmeticOperations";
 
+class FirstAdvancedCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+  }
+
+  executeWithOneArg() {}
+}
+
 class PercentCommand extends Calculator {
   constructor() {
     super();
@@ -10,32 +20,19 @@ class PercentCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  // execute() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null || this.value === 0) {
-  //     updateScreen(this.previousValue / 100);
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue / 100;
-  //   } else {
-  //     updateScreen(this.value / 100);
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.value / 100;
-  //   }
-  // }
-
   executeWithOneArg() {
-    calculator.value = 0;
+    // calculator.value = 0;
     calculator.previousValue = this.previousValue / 100;
-    updateScreen(calculator.previousValue);
+    updateScreen();
   }
 
   executeWithTwoArgs() {
     calculator.value = 0;
     calculator.previousValue = this.value / 100;
-    updateScreen(calculator.previousValue);
+    updateScreen();
   }
+
+  undo() {}
 }
 
 class RevertCommand extends Calculator {
@@ -45,20 +42,18 @@ class RevertCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    console.log(this.value, this.previousValue);
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      updateScreen(-this.previousValue);
-      calculator.value = this.value;
-      calculator.previousValue = -this.previousValue;
-    } else {
-      updateScreen(-this.value);
-      calculator.value = 0;
-      calculator.previousValue = -this.value;
-    }
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = -this.previousValue;
+    updateScreen();
+  }
+
+  executeWithTwoArgs() {
+    calculator.value = -this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen();
   }
 }
 
@@ -69,19 +64,17 @@ class ReciprocateCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      updateScreen(1 / this.previousValue);
-      calculator.value = 0;
-      calculator.previousValue = 1 / this.previousValue;
-    } else {
-      updateScreen(1 / this.value);
-      calculator.value = 0;
-      calculator.previousValue = 1 / this.value;
-    }
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = 1 / this.previousValue;
+    updateScreen();
+  }
+
+  executeWithTwoArgs() {
+    calculator.previousValue = 1 / this.previousValue;
+    updateScreen();
   }
 }
 
@@ -92,20 +85,21 @@ class SquareRootCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      updateScreen(this.previousValue ** 0.5);
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue ** 0.5;
-    } else {
-      updateScreen(this.value ** 0.5);
-      calculator.value = 0;
-      calculator.previousValue = this.value ** 0.5;
-    }
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue ** 0.5;
+    updateScreen();
   }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value ** 0.5;
+    updateScreen();
+  }
+
+  undo() {}
 }
 
 class ThirdPowerRootCommand extends Calculator {
@@ -115,20 +109,111 @@ class ThirdPowerRootCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      updateScreen(this.previousValue ** (1 / 3));
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue ** (1 / 3);
-    } else {
-      updateScreen(this.value ** (1 / 3));
-      calculator.value = 0;
-      calculator.previousValue = this.value ** (1 / 3);
-    }
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue ** (1 / 3);
+    updateScreen();
   }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue ** (1 / 3);
+    updateScreen();
+  }
+}
+
+export class MemoryRecallCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+  }
+
+  executeFirstOperation() {
+    // calculator.value = 0;
+    calculator.previousValue = +localStorage.getItem("memory");
+    updateScreen();
+  }
+
+  executeWithOneArg() {
+    // calculator.value = 0;
+    calculator.previousValue = +localStorage.getItem("memory");
+    updateScreen();
+  }
+
+  executeWithTwoArgs() {
+    calculator.value = +localStorage.getItem("memory");
+    // calculator.previousValue = ;
+    updateScreen(calculator.value);
+  }
+
+  undo() {}
+}
+
+class MemoryClearCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+  }
+
+  executeFirstOperation() {
+    localStorage.clear();
+  }
+
+  executeWithOneArg() {
+    localStorage.clear();
+  }
+
+  executeWithTwoArgs() {
+    localStorage.clear();
+  }
+
+  undo() {}
+}
+
+class MemoryPlusCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+    this.memoryValue = localStorage.getItem("memory");
+  }
+
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    localStorage.setItem("memory", +this.memoryValue + +this.previousValue);
+  }
+
+  executeWithTwoArgs() {
+    localStorage.setItem("memory", +this.memoryValue + +this.value);
+  }
+
+  undo() {}
+}
+
+class MemoryMinusCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+    this.memoryValue = localStorage.getItem("memory");
+  }
+
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    localStorage.setItem("memory", +this.memoryValue - +this.previousValue);
+  }
+
+  executeWithTwoArgs() {
+    localStorage.setItem("memory", +this.memoryValue - +this.value);
+  }
+
+  undo() {}
 }
 
 class YRootCommand extends Calculator {
@@ -138,18 +223,17 @@ class YRootCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue;
-    } else {
-      updateScreen(this.value ** (1 / this.previousValue));
-      calculator.value = 0;
-      calculator.previousValue = this.value ** (1 / this.previousValue);
-    }
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue;
+  }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value ** (1 / this.previousValue);
+    updateScreen(calculator.previousValue);
   }
 }
 
@@ -161,11 +245,10 @@ for (let element of advancedOperations) {
 
 export function advancedCommandSelector(event) {
   const operation = event?.target?.textContent || event;
-  const previousOperation =
-    calculator.operations[calculator.operations.length - 1];
+  const previousOperation = calculator.operations.at(-1);
 
-  if (previousOperation instanceof NumberButtonCommand || operation) {
-    switch (operation) {
+  if (calculator.previousValue !== null) {
+    switch (calculator.operationSigns.at(-1)) {
       case "%":
         calculator.execute(new PercentCommand());
         break;
@@ -183,6 +266,18 @@ export function advancedCommandSelector(event) {
         break;
       case "y√x":
         calculator.execute(new YRootCommand());
+        break;
+      case "mr":
+        calculator.execute(new MemoryRecallCommand());
+        break;
+      case "mc":
+        calculator.execute(new MemoryClearCommand());
+        break;
+      case "m+":
+        calculator.execute(new MemoryPlusCommand());
+        break;
+      case "m-":
+        calculator.execute(new MemoryMinusCommand());
         break;
       default:
         arithmeticCommandSelector(operation);
