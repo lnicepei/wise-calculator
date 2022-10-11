@@ -7,4 +7,5 @@ export function updateScreen(value) {
   screen.textContent =
     value || (calculator.value ?? calculator.previousValue ?? 0);
 }
+
 updateScreen();
