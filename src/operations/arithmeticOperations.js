@@ -1,7 +1,7 @@
 import { calculator, Calculator } from "../calculator/calculator";
 import { updateScreen } from "../screen/updateScreen";
 import { NumberButtonCommand } from "../buttons/numbers";
-import { advancedCommandSelector } from "./advancedOperations";
+import { advancedCommandSelector, MemoryRecallCommand } from "./advancedOperations";
 
 export class FirstCommand extends Calculator {
   constructor() {
@@ -10,21 +10,26 @@ export class FirstCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  // executeFirstOperation() {
-  //   calculator.value = 0;
-  //   calculator.previousValue = this.previousValue;
-  // }
+  executeFirstOperation() {}
 
   executeWithOneArg() {
     calculator.value = 0;
     calculator.previousValue = this.previousValue;
   }
 
-  executeWithTwoArgs() {}
+  // undo() {
+  //   calculator.value = null;
+  //   calculator.previousValue = null;
+  // }
 
-  undo() {
-    calculator.value = null;
-    calculator.previousValue = null;
+  undoWithOneArg() {
+    // calculator.value = null;
+    // calculator.previousValue = null;
+  }
+
+  undoWithTwoArgs() {
+    // calculator.value = null;
+    // calculator.previousValue = null;
   }
 }
 
@@ -35,24 +40,16 @@ export class AddCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  // execute() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null) {
-  // calculator.value = 0;
-  // calculator.previousValue = this.previousValue;
-  //   } else {
-  // updateScreen(this.previousValue + this.value);
-  // calculator.value = 0;
-  // calculator.previousValue = this.value + this.previousValue;
-  //   }
-  // }
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = this.value;
+    updateScreen();
+  }
 
   executeWithTwoArgs() {
     calculator.value = 0;
     calculator.previousValue = this.value + this.previousValue;
-    updateScreen(calculator.previousValue);
+    updateScreen();
   }
 
   undo() {
@@ -77,34 +74,26 @@ export class MultiplyCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  // execute() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null) {
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue;
-  //   } else {
-  //     updateScreen(this.previousValue * this.value);
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue * this.value;
-  //   }
-  // }
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = this.value;
+    updateScreen();
+  }
 
   executeWithTwoArgs() {
     calculator.value = 0;
     calculator.previousValue = this.value * this.previousValue;
-    updateScreen(calculator.previousValue);
+    updateScreen();
   }
 
-  undo() {
-    if (this.value === 0 || this.value === null) {
-      calculator.value = null;
-      calculator.previousValue = this.previousValue / this.value;
-    } else {
-      calculator.value = 0;
-      calculator.previousValue = this.value ?? this.previousValue / this.value;
-    }
+  undoWithOneArg() {
+    calculator.value = null;
+    calculator.previousValue = this.previousValue / this.value;
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value ?? this.previousValue / this.value;
   }
 }
 
@@ -115,24 +104,10 @@ export class DivideCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  // execute() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null) {
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue;
-  //   } else {
-  //     updateScreen(this.previousValue / this.value);
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue / this.value;
-  //   }
-  // }
-
   executeWithTwoArgs() {
     calculator.value = 0;
     calculator.previousValue = this.previousValue / this.value;
-    updateScreen(calculator.previousValue);
+    updateScreen();
   }
 
   undo() {
@@ -153,24 +128,10 @@ export class SubtractCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  // execute() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null) {
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue;
-  //   } else {
-  //     updateScreen(this.previousValue - this.value);
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue - this.value;
-  //   }
-  // }
-
   executeWithTwoArgs() {
     calculator.value = 0;
-    calculator.previousValue = this.value - this.previousValue;
-    updateScreen(calculator.previousValue);
+    calculator.previousValue = this.previousValue - this.value;
+    updateScreen();
   }
 
   undo() {
@@ -189,24 +150,20 @@ export class EqualsCommand extends Calculator {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
+    this.lastOperation =
+      calculator?.operationSigns.at(-1) === "="
+        ? ""
+        : calculator?.operationSigns.at(-1) || 0;
   }
 
-  // execute() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null) {
-  //     calculator.value = 0;
-  //     calculator.previousValue = this.previousValue;
-  //   } else {
-  //     updateScreen(this.previousValue);
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   }
-  // }
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    // arithmeticCommandSelector(this.lastOperation);
+  }
 
   executeWithTwoArgs() {
-    updateScreen(calculator.previousValue);
+    // arithmeticCommandSelector(this.lastOperation);
   }
 
   undo() {
@@ -254,12 +211,13 @@ for (let element of arithmeticOperations) {
 
 export function arithmeticCommandSelector(event) {
   const operation = event?.target?.textContent || event;
-  const previousOperation =
-    calculator.operations[calculator.operations.length - 1];
+  const previousCommand = calculator.operations.at(-1);
 
   if (
-    previousOperation instanceof NumberButtonCommand ||
-    operation === "undo"
+    previousCommand instanceof NumberButtonCommand ||
+    previousCommand instanceof MemoryRecallCommand ||
+    operation === "undo" ||
+    operation === "="
   ) {
     switch (calculator.operationSigns.at(-1) || 0) {
       case "+":
