@@ -11,35 +11,51 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeFirstOperation() {
-    calculator.previousValue = +this.numberButton;
+    calculator.previousValue = this.isNumberDot()
+      ? 0 + this.numberButton
+      : +this.numberButton;
     updateScreen();
   }
 
   executeWithOneArg() {
     calculator.previousValue = +(this.previousValue + this.numberButton);
-    updateScreen();
+    updateScreen(calculator.value);
   }
 
   executeWithTwoArgs() {
     calculator.value = +(this.value + this.numberButton);
+    updateScreen(calculator.value);
+  }
+
+  isNumberDot() {
+    return this.numberButton === ".";
+  }
+
+  // undo() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null || this.value === 0) {
+  //     calculator.value = null;
+  //     calculator.previousValue =
+  //       +this.previousValue.toString().slice(0, -1) || null;
+  //   } else {
+  //     calculator.value = +this.value.toString().slice(0, -1) || null;
+  //     calculator.previousValue = this.previousValue;
+  //   }
+  // }
+
+  undoWithOneArg() {
+    // calculator.value = null;
+    calculator.previousValue =
+      +calculator.previousValue.toString().slice(0, -1) || null;
     updateScreen();
   }
 
-  undo() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      calculator.value = null;
-      calculator.previousValue =
-        +this.previousValue.toString().slice(0, -1) || null;
-    } else {
-      calculator.value = +this.value.toString().slice(0, -1) || null;
-      calculator.previousValue = this.previousValue;
-    }
+  undoWithTwoArgs() {
+    calculator.value = +this.value.toString().slice(0, -1) || null;
+    calculator.previousValue = this.previousValue;
   }
-
-  // TODO: Rewrite undo methods
 }
 
 const numbers = document.querySelectorAll(".number");
@@ -51,5 +67,4 @@ for (let number of numbers) {
 function numberCommand(event) {
   calculator.execute(new NumberButtonCommand(event.target.textContent));
   console.log(calculator);
-  updateScreen();
 }
