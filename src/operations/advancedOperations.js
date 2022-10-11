@@ -10,19 +10,31 @@ class PercentCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null || this.value === 0) {
-      updateScreen(this.previousValue / 100);
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue / 100;
-    } else {
-      updateScreen(this.value / 100);
-      calculator.value = 0;
-      calculator.previousValue = this.value / 100;
-    }
+  // execute() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null || this.value === 0) {
+  //     updateScreen(this.previousValue / 100);
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue / 100;
+  //   } else {
+  //     updateScreen(this.value / 100);
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.value / 100;
+  //   }
+  // }
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue / 100;
+    updateScreen(calculator.previousValue);
+  }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value / 100;
+    updateScreen(calculator.previousValue);
   }
 }
 
@@ -34,7 +46,7 @@ class RevertCommand extends Calculator {
   }
 
   execute() {
-    console.log(this.value, this.previousValue)
+    console.log(this.value, this.previousValue);
     if (this.previousValue === null && this.value === null) {
       calculator.value = this.value;
       calculator.previousValue = this.previousValue;
@@ -73,6 +85,74 @@ class ReciprocateCommand extends Calculator {
   }
 }
 
+class SquareRootCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+  }
+
+  execute() {
+    if (this.previousValue === null && this.value === null) {
+      calculator.value = this.value;
+      calculator.previousValue = this.previousValue;
+    } else if (this.value === null || this.value === 0) {
+      updateScreen(this.previousValue ** 0.5);
+      calculator.value = 0;
+      calculator.previousValue = this.previousValue ** 0.5;
+    } else {
+      updateScreen(this.value ** 0.5);
+      calculator.value = 0;
+      calculator.previousValue = this.value ** 0.5;
+    }
+  }
+}
+
+class ThirdPowerRootCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+  }
+
+  execute() {
+    if (this.previousValue === null && this.value === null) {
+      calculator.value = this.value;
+      calculator.previousValue = this.previousValue;
+    } else if (this.value === null || this.value === 0) {
+      updateScreen(this.previousValue ** (1 / 3));
+      calculator.value = 0;
+      calculator.previousValue = this.previousValue ** (1 / 3);
+    } else {
+      updateScreen(this.value ** (1 / 3));
+      calculator.value = 0;
+      calculator.previousValue = this.value ** (1 / 3);
+    }
+  }
+}
+
+class YRootCommand extends Calculator {
+  constructor() {
+    super();
+    this.value = calculator.value;
+    this.previousValue = calculator.previousValue;
+  }
+
+  execute() {
+    if (this.previousValue === null && this.value === null) {
+      calculator.value = this.value;
+      calculator.previousValue = this.previousValue;
+    } else if (this.value === null || this.value === 0) {
+      calculator.value = 0;
+      calculator.previousValue = this.previousValue;
+    } else {
+      updateScreen(this.value ** (1 / this.previousValue));
+      calculator.value = 0;
+      calculator.previousValue = this.value ** (1 / this.previousValue);
+    }
+  }
+}
+
 const advancedOperations = document.querySelectorAll(".advanced-operations");
 
 for (let element of advancedOperations) {
@@ -84,10 +164,7 @@ export function advancedCommandSelector(event) {
   const previousOperation =
     calculator.operations[calculator.operations.length - 1];
 
-  if (
-    previousOperation instanceof NumberButtonCommand || operation
-  ) {
-    console.log(operation, previousOperation);
+  if (previousOperation instanceof NumberButtonCommand || operation) {
     switch (operation) {
       case "%":
         calculator.execute(new PercentCommand());
@@ -97,6 +174,15 @@ export function advancedCommandSelector(event) {
         break;
       case "1/x":
         calculator.execute(new ReciprocateCommand());
+        break;
+      case "√x":
+        calculator.execute(new SquareRootCommand());
+        break;
+      case "3√x":
+        calculator.execute(new ThirdPowerRootCommand());
+        break;
+      case "y√x":
+        calculator.execute(new YRootCommand());
         break;
       default:
         arithmeticCommandSelector(operation);
