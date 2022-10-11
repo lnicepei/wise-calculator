@@ -10,10 +10,17 @@ export class FirstCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
+  // executeFirstOperation() {
+  //   calculator.value = 0;
+  //   calculator.previousValue = this.previousValue;
+  // }
+
+  executeWithOneArg() {
     calculator.value = 0;
     calculator.previousValue = this.previousValue;
   }
+
+  executeWithTwoArgs() {}
 
   undo() {
     calculator.value = null;
@@ -28,18 +35,24 @@ export class AddCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null) {
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue;
-    } else {
-      updateScreen(this.previousValue + this.value);
-      calculator.value = 0;
-      calculator.previousValue = this.value + this.previousValue;
-    }
+  // execute() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null) {
+  // calculator.value = 0;
+  // calculator.previousValue = this.previousValue;
+  //   } else {
+  // updateScreen(this.previousValue + this.value);
+  // calculator.value = 0;
+  // calculator.previousValue = this.value + this.previousValue;
+  //   }
+  // }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value + this.previousValue;
+    updateScreen(calculator.previousValue);
   }
 
   undo() {
@@ -64,18 +77,24 @@ export class MultiplyCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null) {
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue;
-    } else {
-      updateScreen(this.previousValue * this.value);
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue * this.value;
-    }
+  // execute() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null) {
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue;
+  //   } else {
+  //     updateScreen(this.previousValue * this.value);
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue * this.value;
+  //   }
+  // }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value * this.previousValue;
+    updateScreen(calculator.previousValue);
   }
 
   undo() {
@@ -96,18 +115,24 @@ export class DivideCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null) {
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue;
-    } else {
-      updateScreen(this.previousValue / this.value);
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue / this.value;
-    }
+  // execute() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null) {
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue;
+  //   } else {
+  //     updateScreen(this.previousValue / this.value);
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue / this.value;
+  //   }
+  // }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.previousValue / this.value;
+    updateScreen(calculator.previousValue);
   }
 
   undo() {
@@ -128,18 +153,24 @@ export class SubtractCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null) {
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue;
-    } else {
-      updateScreen(this.previousValue - this.value);
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue - this.value;
-    }
+  // execute() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null) {
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue;
+  //   } else {
+  //     updateScreen(this.previousValue - this.value);
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue - this.value;
+  //   }
+  // }
+
+  executeWithTwoArgs() {
+    calculator.value = 0;
+    calculator.previousValue = this.value - this.previousValue;
+    updateScreen(calculator.previousValue);
   }
 
   undo() {
@@ -160,18 +191,22 @@ export class EqualsCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  execute() {
-    if (this.previousValue === null && this.value === null) {
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    } else if (this.value === null) {
-      calculator.value = 0;
-      calculator.previousValue = this.previousValue;
-    } else {
-      updateScreen(this.previousValue);
-      calculator.value = this.value;
-      calculator.previousValue = this.previousValue;
-    }
+  // execute() {
+  //   if (this.previousValue === null && this.value === null) {
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   } else if (this.value === null) {
+  //     calculator.value = 0;
+  //     calculator.previousValue = this.previousValue;
+  //   } else {
+  //     updateScreen(this.previousValue);
+  //     calculator.value = this.value;
+  //     calculator.previousValue = this.previousValue;
+  //   }
+  // }
+
+  executeWithTwoArgs() {
+    updateScreen(calculator.previousValue);
   }
 
   undo() {

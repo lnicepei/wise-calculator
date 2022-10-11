@@ -11,7 +11,13 @@ export class Calculator {
 
   execute(command) {
     this.operations.push(command);
-    return command.execute();
+    if (this.previousValue === null && this.value === null) {
+      command.executeFirstOperation();
+    } else if (this.value === null) {
+      command.executeWithOneArg();
+    } else {
+      command.executeWithTwoArgs();
+    }
   }
 
   undo() {
