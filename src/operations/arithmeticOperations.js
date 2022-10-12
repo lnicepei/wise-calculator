@@ -1,9 +1,13 @@
 import { calculator, Calculator } from "../calculator/calculator";
 import { updateScreen } from "../screen/updateScreen";
 import { NumberButtonCommand } from "../buttons/numbers";
-import { advancedCommandSelector, MemoryRecallCommand } from "./advancedOperations";
+import {
+  advancedCommandSelector,
+  MemoryRecallCommand,
+  ReciprocateCommand,
+} from "./advancedOperations";
 
-export class FirstCommand extends Calculator {
+export class AddCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -14,35 +18,6 @@ export class FirstCommand extends Calculator {
 
   executeWithOneArg() {
     calculator.value = 0;
-    calculator.previousValue = this.previousValue;
-  }
-
-  // undo() {
-  //   calculator.value = null;
-  //   calculator.previousValue = null;
-  // }
-
-  undoWithOneArg() {
-    // calculator.value = null;
-    // calculator.previousValue = null;
-  }
-
-  undoWithTwoArgs() {
-    // calculator.value = null;
-    // calculator.previousValue = null;
-  }
-}
-
-export class AddCommand extends Calculator {
-  constructor() {
-    super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
-  }
-
-  executeWithOneArg() {
-    calculator.value = 0;
-    calculator.previousValue = this.value;
     updateScreen();
   }
 
@@ -72,11 +47,13 @@ export class MultiplyCommand extends Calculator {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
+    this.requiresPreviousOperationFinished = true;
   }
+
+  executeFirstOperation() {}
 
   executeWithOneArg() {
     calculator.value = 0;
-    calculator.previousValue = this.value;
     updateScreen();
   }
 
@@ -102,12 +79,27 @@ export class DivideCommand extends Calculator {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
+    this.requiresPreviousOperationFinished = true;
+  }
+
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    updateScreen();
   }
 
   executeWithTwoArgs() {
     calculator.value = 0;
     calculator.previousValue = this.previousValue / this.value;
-    updateScreen();
+    if (
+      Number.isNaN(calculator.previousValue) ||
+      calculator.previousValue === Infinity
+    ) {
+      alert("You can't divide by zero!");
+    } else {
+      updateScreen();
+    }
   }
 
   undo() {
@@ -126,11 +118,19 @@ export class SubtractCommand extends Calculator {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
+    this.requiresPreviousOperationFinished = true;
+  }
+
+  executeFirstOperation() {}
+
+  executeWithOneArg() {
+    calculator.value = 0;
+    updateScreen();
   }
 
   executeWithTwoArgs() {
-    calculator.value = 0;
     calculator.previousValue = this.previousValue - this.value;
+    calculator.value = 0;
     updateScreen();
   }
 
@@ -150,20 +150,18 @@ export class EqualsCommand extends Calculator {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
-    this.lastOperation =
-      calculator?.operationSigns.at(-1) === "="
-        ? ""
-        : calculator?.operationSigns.at(-1) || 0;
   }
 
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    // arithmeticCommandSelector(this.lastOperation);
+    if (calculator.operationSigns.at(-1) !== "=")
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
   }
 
   executeWithTwoArgs() {
-    // arithmeticCommandSelector(this.lastOperation);
+    arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    calculator.value = 0;
   }
 
   undo() {
@@ -184,9 +182,24 @@ export class AllClearCommand extends Calculator {
     this.previousValue = calculator.previousValue;
     this.operations = calculator.operations;
     this.operationSigns = calculator.operationSigns;
+    this.requiresPreviousOperationFinished = false;
   }
 
-  execute() {
+  executeFirstOperation() {
+    calculator.value = null;
+    calculator.previousValue = null;
+    calculator.operations = [];
+    calculator.operationSigns = [];
+  }
+
+  executeWithOneArg() {
+    calculator.value = null;
+    calculator.previousValue = null;
+    calculator.operations = [];
+    calculator.operationSigns = [];
+  }
+
+  executeWithTwoArgs() {
     calculator.value = null;
     calculator.previousValue = null;
     calculator.operations = [];
@@ -215,11 +228,10 @@ export function arithmeticCommandSelector(event) {
 
   if (
     previousCommand instanceof NumberButtonCommand ||
-    previousCommand instanceof MemoryRecallCommand ||
-    operation === "undo" ||
-    operation === "="
+    previousCommand instanceof EqualsCommand ||
+    operation === "undo"
   ) {
-    switch (calculator.operationSigns.at(-1) || 0) {
+    switch (operation) {
       case "+":
         calculator.execute(new AddCommand());
         break;
@@ -243,11 +255,8 @@ export function arithmeticCommandSelector(event) {
         calculator.undo();
         updateScreen();
         break;
-      case 0:
-        calculator.execute(new FirstCommand());
-        break;
       default:
-        advancedCommandSelector(operation);
+        // advancedCommandSelector(operation);
         break;
     }
     calculator.operationSigns.push(operation);
