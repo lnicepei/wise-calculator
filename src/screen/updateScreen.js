@@ -1,5 +1,5 @@
 import { calculator } from "../calculator/calculator";
-import "../styles/screen.scss";
+import "../styles/topBar.scss";
 
 export function updateScreen(value) {
   const screen = document.querySelector(".screen");
