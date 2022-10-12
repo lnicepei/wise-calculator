@@ -4,7 +4,11 @@ import { NumberButtonCommand } from "../buttons/numbers";
 import {
   advancedCommandSelector,
   MemoryRecallCommand,
+  PercentCommand,
   ReciprocateCommand,
+  RevertCommand,
+  SquareRootCommand,
+  ThirdPowerRootCommand,
 } from "./advancedOperations";
 
 export class AddCommand extends Calculator {
@@ -23,7 +27,7 @@ export class AddCommand extends Calculator {
 
   executeWithTwoArgs() {
     calculator.value = 0;
-    calculator.previousValue = this.value + this.previousValue;
+    calculator.previousValue = +this.value + +this.previousValue;
     updateScreen();
   }
 
@@ -229,6 +233,12 @@ export function arithmeticCommandSelector(event) {
   if (
     previousCommand instanceof NumberButtonCommand ||
     previousCommand instanceof EqualsCommand ||
+    previousCommand instanceof ReciprocateCommand ||
+    previousCommand instanceof RevertCommand ||
+    previousCommand instanceof PercentCommand ||
+    previousCommand instanceof SquareRootCommand ||
+    previousCommand instanceof ThirdPowerRootCommand ||
+    previousCommand instanceof MemoryRecallCommand ||
     operation === "undo"
   ) {
     switch (operation) {
@@ -256,7 +266,6 @@ export function arithmeticCommandSelector(event) {
         updateScreen();
         break;
       default:
-        // advancedCommandSelector(operation);
         break;
     }
     calculator.operationSigns.push(operation);
