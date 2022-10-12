@@ -67,6 +67,7 @@ export class ReciprocateCommand extends Calculator {
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    calculator.value = null;
     calculator.previousValue = 1 / calculator.previousValue;
     updateScreen();
   }
@@ -84,14 +85,13 @@ export class SquareRootCommand extends Calculator {
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    calculator.value = 0;
     calculator.previousValue = this.previousValue ** 0.5;
     updateScreen();
   }
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.value = 0;
+    calculator.value = null;
     calculator.previousValue = calculator.previousValue ** 0.5;
     updateScreen();
   }
@@ -109,14 +109,12 @@ export class ThirdPowerRootCommand extends Calculator {
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    calculator.value = 0;
     calculator.previousValue = calculator.previousValue ** (1 / 3);
     updateScreen();
   }
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.value = 0;
     calculator.previousValue = calculator.previousValue ** (1 / 3);
     updateScreen();
   }
@@ -280,10 +278,6 @@ export function advancedCommandSelector(event) {
         arithmeticCommandSelector(operation);
         break;
     }
-    calculator.operationSigns.push(operation);
-  // } else {
-  //   calculator.operationSigns.splice(-1, 1, operation);
-  // }
 
   console.log(calculator);
 }
