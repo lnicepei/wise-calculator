@@ -11,14 +11,20 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeFirstOperation() {
-    calculator.previousValue = this.isNumberDot()
-      ? 0 + this.numberButton
-      : +this.numberButton;
+    if (this.isNumberDot() && !this.includesDot(calculator.previousValue ?? 0)) {
+      calculator.previousValue = 0 + this.numberButton;
+    } else {
+      calculator.previousValue = +this.numberButton;
+    }
     updateScreen();
   }
 
   executeWithOneArg() {
-    calculator.previousValue = +(this.previousValue + this.numberButton);
+    if (this.isNumberDot() && !this.includesDot(calculator.previousValue ?? 0)) {
+      calculator.previousValue = this.previousValue + this.numberButton;
+    } else {
+      calculator.previousValue = +(this.previousValue + this.numberButton) || calculator.previousValue;
+    }
     updateScreen(calculator.value);
   }
 
@@ -31,19 +37,9 @@ export class NumberButtonCommand extends Calculator {
     return this.numberButton === ".";
   }
 
-  // undo() {
-  //   if (this.previousValue === null && this.value === null) {
-  //     calculator.value = this.value;
-  //     calculator.previousValue = this.previousValue;
-  //   } else if (this.value === null || this.value === 0) {
-  //     calculator.value = null;
-  //     calculator.previousValue =
-  //       +this.previousValue.toString().slice(0, -1) || null;
-  //   } else {
-  //     calculator.value = +this.value.toString().slice(0, -1) || null;
-  //     calculator.previousValue = this.previousValue;
-  //   }
-  // }
+  includesDot(value) {
+    return value.toString().includes(".");
+  }
 
   undoWithOneArg() {
     // calculator.value = null;
