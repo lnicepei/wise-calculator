@@ -6,10 +6,6 @@
 .numbers,
 .advanced-operations,
 .arithmetic-operations {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-
   div {
     display: flex;
     justify-content: center;
@@ -29,7 +25,16 @@
   }
 }
 
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
 .advanced-operations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   background-color: #5a5b5c;
 }
 
@@ -37,11 +42,6 @@
   display: flex;
   flex-direction: column;
   background-color: #fe9d08;
-
-  div {
-    height: 50px;
-    width: 100px;
-  }
 }
 
 .numbers div:nth-child(12) {
