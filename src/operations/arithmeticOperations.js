@@ -219,7 +219,7 @@ export class AllClearCommand extends Calculator {
 }
 
 const arithmeticOperations = document.querySelectorAll(
-  ".arithmetic-operations, .equals"
+  ".arithmetic-operations, .equals, .undo"
 );
 
 for (let element of arithmeticOperations) {
