@@ -13,7 +13,7 @@ class FirstAdvancedCommand extends Calculator {
   executeWithOneArg() {}
 }
 
-class PercentCommand extends Calculator {
+export class PercentCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -35,7 +35,7 @@ class PercentCommand extends Calculator {
   undo() {}
 }
 
-class RevertCommand extends Calculator {
+export class RevertCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -45,19 +45,22 @@ class RevertCommand extends Calculator {
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    calculator.value = 0;
     calculator.previousValue = -this.previousValue;
     updateScreen();
   }
 
   executeWithTwoArgs() {
-    calculator.value = -this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen();
+    if (calculator.value !== 0) {
+      calculator.value = -calculator.value;
+      updateScreen(calculator.value);
+    } else {
+      calculator.previousValue = -calculator.previousValue;
+      updateScreen();
+    }
   }
 }
 
-class ReciprocateCommand extends Calculator {
+export class ReciprocateCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -67,18 +70,18 @@ class ReciprocateCommand extends Calculator {
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    calculator.value = 0;
-    calculator.previousValue = 1 / this.previousValue;
+    calculator.previousValue = 1 / calculator.previousValue;
     updateScreen();
   }
 
   executeWithTwoArgs() {
-    calculator.previousValue = 1 / this.previousValue;
+    arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    calculator.previousValue = 1 / calculator.previousValue;
     updateScreen();
   }
 }
 
-class SquareRootCommand extends Calculator {
+export class SquareRootCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -96,13 +99,16 @@ class SquareRootCommand extends Calculator {
   executeWithTwoArgs() {
     calculator.value = 0;
     calculator.previousValue = this.value ** 0.5;
+    arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    calculator.previousValue = 1 / calculator.previousValue;
+    updateScreen();
     updateScreen();
   }
 
   undo() {}
 }
 
-class ThirdPowerRootCommand extends Calculator {
+export class ThirdPowerRootCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -152,7 +158,7 @@ export class MemoryRecallCommand extends Calculator {
   undo() {}
 }
 
-class MemoryClearCommand extends Calculator {
+export class MemoryClearCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -174,7 +180,7 @@ class MemoryClearCommand extends Calculator {
   undo() {}
 }
 
-class MemoryPlusCommand extends Calculator {
+export class MemoryPlusCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -195,7 +201,7 @@ class MemoryPlusCommand extends Calculator {
   undo() {}
 }
 
-class MemoryMinusCommand extends Calculator {
+export class MemoryMinusCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -216,7 +222,7 @@ class MemoryMinusCommand extends Calculator {
   undo() {}
 }
 
-class YRootCommand extends Calculator {
+export class YRootCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
@@ -247,46 +253,46 @@ export function advancedCommandSelector(event) {
   const operation = event?.target?.textContent || event;
   const previousOperation = calculator.operations.at(-1);
 
-  if (calculator.previousValue !== null) {
-    switch (calculator.operationSigns.at(-1)) {
-      case "%":
-        calculator.execute(new PercentCommand());
-        break;
-      case "+/-":
-        calculator.execute(new RevertCommand());
-        break;
-      case "1/x":
-        calculator.execute(new ReciprocateCommand());
-        break;
-      case "√x":
-        calculator.execute(new SquareRootCommand());
-        break;
-      case "3√x":
-        calculator.execute(new ThirdPowerRootCommand());
-        break;
-      case "y√x":
-        calculator.execute(new YRootCommand());
-        break;
-      case "mr":
-        calculator.execute(new MemoryRecallCommand());
-        break;
-      case "mc":
-        calculator.execute(new MemoryClearCommand());
-        break;
-      case "m+":
-        calculator.execute(new MemoryPlusCommand());
-        break;
-      case "m-":
-        calculator.execute(new MemoryMinusCommand());
-        break;
-      default:
-        arithmeticCommandSelector(operation);
-        break;
-    }
-    calculator.operationSigns.push(operation);
-  } else {
-    calculator.operationSigns.splice(-1, 1, operation);
+  // if (calculator.previousValue !== null) {
+  switch (operation) {
+    case "%":
+      calculator.execute(new PercentCommand());
+      break;
+    case "+/-":
+      calculator.execute(new RevertCommand());
+      break;
+    case "1/x":
+      calculator.execute(new ReciprocateCommand());
+      break;
+    case "√x":
+      calculator.execute(new SquareRootCommand());
+      break;
+    case "3√x":
+      calculator.execute(new ThirdPowerRootCommand());
+      break;
+    case "y√x":
+      calculator.execute(new YRootCommand());
+      break;
+    case "mr":
+      calculator.execute(new MemoryRecallCommand());
+      break;
+    case "mc":
+      calculator.execute(new MemoryClearCommand());
+      break;
+    case "m+":
+      calculator.execute(new MemoryPlusCommand());
+      break;
+    case "m-":
+      calculator.execute(new MemoryMinusCommand());
+      break;
+    default:
+      arithmeticCommandSelector(operation);
+      break;
   }
+  // calculator.operationSigns.push(operation);
+  // } else {
+  //   calculator.operationSigns.splice(-1, 1, operation);
+  // }
 
   console.log(calculator);
 }
