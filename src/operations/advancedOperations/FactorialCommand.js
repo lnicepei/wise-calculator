@@ -26,12 +26,16 @@ export class FactorialCommand extends Calculator {
   }
 
   factorial(number) {
-    if (number < 0) {
-      return -1;
-    } else if (number === 0) {
-      return 1;
+    if (number <= 17000) {
+      if (number < 0) {
+        return -1;
+      } else if (number === 0) {
+        return 1;
+      } else {
+        return number * this.factorial(number - 1);
+      }
     } else {
-      return number * this.factorial(number - 1);
+      return number;
     }
   }
 }
