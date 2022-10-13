@@ -9,13 +9,11 @@ export class MemoryRecallCommand extends Calculator {
   }
 
   executeFirstOperation() {
-    // calculator.value = 0;
     calculator.previousValue = +localStorage.getItem("memory");
     updateScreen();
   }
 
   executeWithOneArg() {
-    // calculator.value = 0;
     calculator.previousValue = +localStorage.getItem("memory");
     updateScreen();
   }
