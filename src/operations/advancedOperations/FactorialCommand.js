@@ -9,7 +9,10 @@ export class FactorialCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
+  executeFirstOperation() {
+    calculator.previousValue = 1;
+    updateScreen();
+  }
 
   executeWithOneArg() {
     calculator.previousValue = this.factorial(calculator.previousValue);
