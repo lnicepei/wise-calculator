@@ -12,14 +12,22 @@ export class SquareRootCommand extends Calculator {
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    calculator.previousValue = this.previousValue ** 0.5;
-    updateScreen();
+    if (calculator.previousValue >= 0) {
+      calculator.previousValue = this.previousValue ** 0.5;
+      updateScreen();
+    } else {
+      arithmeticCommandSelector("AC");
+    }
   }
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.value = null;
-    calculator.previousValue = calculator.previousValue ** 0.5;
+    if (calculator.previousValue >= 0) {
+      calculator.value = null;
+      calculator.previousValue = calculator.previousValue ** 0.5;
+    } else {
+      arithmeticCommandSelector("AC");
+    }
     updateScreen();
   }
 
