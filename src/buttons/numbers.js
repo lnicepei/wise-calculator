@@ -23,14 +23,18 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeWithOneArg() {
-    if (
-      this.isNumberDot() &&
-      !this.includesDot(calculator.previousValue ?? 0)
-    ) {
-      calculator.previousValue = this.previousValue + this.numberButton;
+    if (this.isNumberDot()) {
+      if (!this.includesDot(calculator.previousValue ?? 0)) {
+        calculator.previousValue = this.previousValue + this.numberButton;
+      }
     } else {
-      calculator.previousValue =
-        +(this.previousValue + this.numberButton) || calculator.previousValue;
+      if (this.numberButton === "0") {
+        calculator.previousValue = calculator.previousValue + this.numberButton;
+      } else {
+        calculator.previousValue = +(
+          calculator.previousValue + this.numberButton
+        );
+      }
     }
     updateScreen(calculator.value);
   }
@@ -43,16 +47,17 @@ export class NumberButtonCommand extends Calculator {
       calculator.previousValue = +(this.value + this.numberButton);
       updateScreen();
     } else {
-      if (
-        this.isNumberDot() &&
-        !this.includesDot(calculator.value ?? 0)
-      ) {
-        calculator.value = this.value + this.numberButton;
+      if (this.isNumberDot()) {
+        if (!this.includesDot(calculator.value ?? 0)) {
+          calculator.value = this.value + this.numberButton;
+        }
       } else {
-        calculator.value =
-          +(this.value + this.numberButton) || calculator.value;
+        if (this.numberButton === "0") {
+          calculator.value = calculator.value + this.numberButton;
+        } else {
+          calculator.value = +(calculator.value + this.numberButton);
+        }
       }
-      // calculator.value = +(this.value + this.numberButton);
       updateScreen(calculator.value);
     }
   }
