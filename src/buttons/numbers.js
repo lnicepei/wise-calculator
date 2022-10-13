@@ -11,7 +11,10 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeFirstOperation() {
-    if (this.isNumberDot() && !this.includesDot(calculator.previousValue ?? 0)) {
+    if (
+      this.isNumberDot() &&
+      !this.includesDot(calculator.previousValue ?? 0)
+    ) {
       calculator.previousValue = 0 + this.numberButton;
     } else {
       calculator.previousValue = +this.numberButton;
@@ -20,17 +23,38 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeWithOneArg() {
-    if (this.isNumberDot() && !this.includesDot(calculator.previousValue ?? 0)) {
+    if (
+      this.isNumberDot() &&
+      !this.includesDot(calculator.previousValue ?? 0)
+    ) {
       calculator.previousValue = this.previousValue + this.numberButton;
     } else {
-      calculator.previousValue = +(this.previousValue + this.numberButton) || calculator.previousValue;
+      calculator.previousValue =
+        +(this.previousValue + this.numberButton) || calculator.previousValue;
     }
     updateScreen(calculator.value);
   }
 
   executeWithTwoArgs() {
-    calculator.value = +(this.value + this.numberButton);
-    updateScreen(calculator.value);
+    if (calculator.operationSigns.at(-1) === "=") {
+      calculator.operationSigns.pop();
+      calculator.value = null;
+      calculator.previousValue = null;
+      calculator.previousValue = +(this.value + this.numberButton);
+      updateScreen();
+    } else {
+      if (
+        this.isNumberDot() &&
+        !this.includesDot(calculator.value ?? 0)
+      ) {
+        calculator.value = this.value + this.numberButton;
+      } else {
+        calculator.value =
+          +(this.value + this.numberButton) || calculator.value;
+      }
+      // calculator.value = +(this.value + this.numberButton);
+      updateScreen(calculator.value);
+    }
   }
 
   isNumberDot() {
@@ -42,7 +66,6 @@ export class NumberButtonCommand extends Calculator {
   }
 
   undoWithOneArg() {
-    // calculator.value = null;
     calculator.previousValue =
       +calculator.previousValue.toString().slice(0, -1) || null;
     updateScreen();
