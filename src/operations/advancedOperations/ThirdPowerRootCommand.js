@@ -12,13 +12,22 @@ export class ThirdPowerRootCommand extends Calculator {
   executeFirstOperation() {}
 
   executeWithOneArg() {
-    calculator.previousValue = calculator.previousValue ** (1 / 3);
+    if (calculator.previousValue >= 0) {
+      calculator.previousValue = calculator.previousValue ** (1 / 3);
+    } else {
+      calculator.previousValue = -(this.absVal(calculator.previousValue) ** (1 / 3));
+    }
     updateScreen();
   }
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    calculator.value = null;
     calculator.previousValue = calculator.previousValue ** (1 / 3);
     updateScreen();
+  }
+
+  absVal(value) {
+    return value < 0 ? -value : value;
   }
 }
