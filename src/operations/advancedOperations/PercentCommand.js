@@ -9,6 +9,8 @@ export class PercentCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
+  executeFirstOperation() {}
+
   executeWithOneArg() {
     calculator.previousValue = this.previousValue / 100;
     updateScreen();
