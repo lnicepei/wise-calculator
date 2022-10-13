@@ -16,6 +16,7 @@ export class SquareRootCommand extends Calculator {
       calculator.previousValue = this.previousValue ** 0.5;
       updateScreen();
     } else {
+      alert("You cannot extract root of a negative number");
       arithmeticCommandSelector("AC");
     }
   }
@@ -26,6 +27,7 @@ export class SquareRootCommand extends Calculator {
       calculator.value = null;
       calculator.previousValue = calculator.previousValue ** 0.5;
     } else {
+      alert("You cannot extract root of a negative number");
       arithmeticCommandSelector("AC");
     }
     updateScreen();
