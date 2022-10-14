@@ -15,6 +15,7 @@ import { SquaredCommand } from "../operations/advancedOperations/SquaredCommand"
 import { SquareRootCommand } from "../operations/advancedOperations/SquareRootCommand";
 import { ThirdPowerRootCommand } from "../operations/advancedOperations/ThirdPowerRootCommand";
 import { YRootCommand } from "../operations/advancedOperations/YRootCommand";
+import { AllClearCommand } from "../operations/arithmeticOperations/AllClearCommand";
 
 const advancedOperations = document.querySelectorAll(".advanced-operations");
 
@@ -70,6 +71,9 @@ export function advancedCommandSelector(event) {
       break;
     case "x!":
       calculator.execute(new FactorialCommand());
+      break;
+    case "AC":
+      calculator.execute(new AllClearCommand());
       break;
     default:
       arithmeticCommandSelector(operation);

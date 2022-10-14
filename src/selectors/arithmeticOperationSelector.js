@@ -48,6 +48,7 @@ export function arithmeticCommandSelector(event) {
     previousCommand instanceof FactorialCommand ||
     operation === "undo" ||
     operation === "y√x" ||
+    operation === "AC" ||
     operation === "x^y"
   ) {
     switch (
@@ -69,19 +70,14 @@ export function arithmeticCommandSelector(event) {
       case "=":
         calculator.execute(new EqualsCommand());
         break;
-      case "AC":
-        calculator.execute(new AllClearCommand());
-        updateScreen();
-        break;
       case "undo":
         calculator.undo();
-        updateScreen();
         break;
       default:
         advancedCommandSelector(calculator.operationSigns.at(-1) || operation);
         break;
     }
-    if (operation !== "y√x" || operation !== "x^y")
+    if (operation !== "y√x" && operation !== "x^y" && operation !== "undo")
       calculator.operationSigns.push(operation);
   } else {
     calculator.operationSigns.splice(-1, 1, operation);
