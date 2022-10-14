@@ -34,6 +34,8 @@ export class EqualsCommand extends Calculator {
       calculator.operationSigns.at(-1) === undefined
     ) {
       calculator.previousValue = 0;
+    } else {
+      calculator.operationSigns.pop();
     }
   }
 
