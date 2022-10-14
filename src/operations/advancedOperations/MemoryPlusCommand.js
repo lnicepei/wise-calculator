@@ -18,5 +18,11 @@ export class MemoryPlusCommand extends Calculator {
     localStorage.setItem("memory", +this.memoryValue + +this.value);
   }
 
-  undo() {}
+  undoWithOneArg() {
+    localStorage.setItem("memory", +this.memoryValue - +this.previousValue);
+  }
+
+  undoWithTwoArgs() {
+    localStorage.setItem("memory", +this.memoryValue - +this.value);
+  }
 }

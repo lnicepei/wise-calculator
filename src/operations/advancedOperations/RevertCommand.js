@@ -25,4 +25,14 @@ export class RevertCommand extends Calculator {
       updateScreen();
     }
   }
+
+  undoWithOneArg() {
+    calculator.previousValue = -calculator.previousValue;
+    updateScreen();
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = -calculator.value;
+    updateScreen(calculator.value);
+  }
 }

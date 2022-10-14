@@ -22,5 +22,14 @@ export class PercentCommand extends Calculator {
     updateScreen();
   }
 
-  undo() {}
+  undoWithOneArg() {
+    calculator.previousValue = calculator.previousValue * 100;
+    updateScreen();
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen();
+  }
 }

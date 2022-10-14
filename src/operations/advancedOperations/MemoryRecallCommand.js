@@ -23,5 +23,13 @@ export class MemoryRecallCommand extends Calculator {
     updateScreen(calculator.value);
   }
 
-  undo() {}
+  undoWithOneArg() {
+    calculator.previousValue = this.previousValue;
+    updateScreen();
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    updateScreen(calculator.value);
+  }
 }

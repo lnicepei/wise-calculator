@@ -17,8 +17,13 @@ export class YRootCommand extends Calculator {
   }
 
   executeWithTwoArgs() {
-    // arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.previousValue = this.value ** (1 / this.previousValue);
+    if (calculator.operationSigns.at(-1) !== "y√x")
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    if (calculator.value !== 0) {
+      calculator.previousValue =
+        calculator.value ** (1 / calculator.previousValue);
+      calculator.value = 0;
+    }
     updateScreen();
   }
 

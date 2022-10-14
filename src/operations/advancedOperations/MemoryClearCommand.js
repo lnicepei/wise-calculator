@@ -5,6 +5,7 @@ export class MemoryClearCommand extends Calculator {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
+    this.memory = +localStorage.getItem("memory");
   }
 
   executeFirstOperation() {
@@ -19,5 +20,11 @@ export class MemoryClearCommand extends Calculator {
     localStorage.clear();
   }
 
-  undo() {}
+  undoWithOneArg(){
+    localStorage.setItem("memory", this.memory)
+  }
+
+  undoWithTwoArgs(){
+    localStorage.setItem("memory", this.memory)
+  }
 }

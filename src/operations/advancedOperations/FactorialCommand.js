@@ -35,7 +35,19 @@ export class FactorialCommand extends Calculator {
         return number * this.factorial(number - 1);
       }
     } else {
+      alert("The number is too big for finding its factorial");
       return number;
     }
+  }
+
+  undoWithOneArg() {
+    calculator.previousValue = this.previousValue;
+    updateScreen();
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen();
   }
 }

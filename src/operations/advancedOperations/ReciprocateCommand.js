@@ -9,7 +9,9 @@ export class ReciprocateCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
+  executeFirstOperation() {
+    alert("You cannot divide by zero!");
+  }
 
   executeWithOneArg() {
     calculator.previousValue = 1 / calculator.previousValue;
@@ -18,10 +20,19 @@ export class ReciprocateCommand extends Calculator {
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.value = null;
     calculator.previousValue = 1 / calculator.previousValue;
     updateScreen();
   }
 
-  undo() {}
+  undoWithOneArg() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
 }
