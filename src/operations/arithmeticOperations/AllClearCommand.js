@@ -1,40 +1,40 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { updateScreen } from "../../screen/updateScreen";
 
 export class AllClearCommand extends Calculator {
   constructor() {
     super();
     this.value = calculator.value;
     this.previousValue = calculator.previousValue;
-    this.operations = calculator.operations;
-    this.operationSigns = calculator.operationSigns;
-    this.requiresPreviousOperationFinished = false;
   }
 
   executeFirstOperation() {
     calculator.value = null;
     calculator.previousValue = null;
-    calculator.operations = [];
-    calculator.operationSigns = [];
+    updateScreen();
   }
 
   executeWithOneArg() {
     calculator.value = null;
     calculator.previousValue = null;
-    calculator.operations = [];
-    calculator.operationSigns = [];
+    updateScreen();
   }
 
   executeWithTwoArgs() {
     calculator.value = null;
     calculator.previousValue = null;
-    calculator.operations = [];
-    calculator.operationSigns = [];
+    updateScreen();
   }
 
-  undo() {
+  undoWithOneArg() {
     calculator.value = this.value;
     calculator.previousValue = this.previousValue;
-    calculator.operations = this.operations;
-    calculator.operationSigns = this.operationSigns;
+    updateScreen(calculator.value);
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen();
   }
 }
