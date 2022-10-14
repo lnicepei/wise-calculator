@@ -1,6 +1,5 @@
 import { calculator, Calculator } from "../../calculator/calculator";
 import { updateScreen } from "../../screen/updateScreen";
-import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
 export class AddCommand extends Calculator {
   constructor() {
@@ -31,6 +30,6 @@ export class AddCommand extends Calculator {
   undoWithTwoArgs() {
     calculator.value = this.value;
     calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
+    updateScreen(calculator.previousValue);
   }
 }
