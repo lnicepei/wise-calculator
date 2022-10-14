@@ -50,7 +50,10 @@ export function arithmeticCommandSelector(event) {
     operation === "y√x" ||
     operation === "x^y"
   ) {
-    switch (operation) {
+    switch (
+      (operation !== "undo" && calculator.operationSigns.at(-1)) ||
+      operation
+    ) {
       case "+":
         calculator.execute(new AddCommand());
         break;
@@ -72,12 +75,14 @@ export function arithmeticCommandSelector(event) {
         break;
       case "undo":
         calculator.undo();
+        updateScreen();
         break;
       default:
-        advancedCommandSelector(operation);
+        advancedCommandSelector(calculator.operationSigns.at(-1) || operation);
         break;
     }
-    calculator.operationSigns.push(operation);
+    if (operation !== "y√x" || operation !== "x^y")
+      calculator.operationSigns.push(operation);
   } else {
     calculator.operationSigns.splice(-1, 1, operation);
   }
