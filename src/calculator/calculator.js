@@ -22,7 +22,7 @@ export class Calculator {
 
   undo() {
     const lastCommand = this.operations.pop();
-    this.operationSigns.pop();
+    // this.operationSigns.pop();
     if (this.value === null) {
       lastCommand.undoWithOneArg();
     } else {
