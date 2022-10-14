@@ -21,4 +21,14 @@ export class CubedCommand extends Calculator {
     calculator.previousValue = calculator.previousValue ** 3;
     updateScreen();
   }
+
+  undoWithOneArg() {
+    calculator.previousValue = calculator.previousValue ** (1 / 3);
+    updateScreen();
+  }
+
+  undoWithTwoArgs() {
+    calculator.previousValue = calculator.previousValue ** (1 / 3);
+    updateScreen();
+  }
 }

@@ -1,5 +1,6 @@
 import { calculator, Calculator } from "../../calculator/calculator";
 import { updateScreen } from "../../screen/updateScreen";
+import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
 export class AddCommand extends Calculator {
   constructor() {
@@ -21,16 +22,15 @@ export class AddCommand extends Calculator {
     updateScreen();
   }
 
-  undo() {
-    if (this.value === 0 || this.value === null) {
-      calculator.value = null;
-      calculator.previousValue = this.previousValue - this.value;
-    } else {
-      calculator.value = 0;
-      calculator.previousValue = this.value ?? this.previousValue - this.value;
-    }
+  undoWithOneArg() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
   }
 
-  // TODO: Rewrite undo methods
-  validate() {}
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
 }
