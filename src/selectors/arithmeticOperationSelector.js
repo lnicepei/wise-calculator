@@ -72,7 +72,6 @@ export function arithmeticCommandSelector(event) {
         break;
       case "undo":
         calculator.undo();
-        updateScreen();
         break;
       default:
         advancedCommandSelector(operation);
