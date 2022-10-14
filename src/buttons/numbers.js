@@ -77,8 +77,9 @@ export class NumberButtonCommand extends Calculator {
   }
 
   undoWithTwoArgs() {
-    calculator.value = +this.value.toString().slice(0, -1) || null;
-    calculator.previousValue = this.previousValue;
+    calculator.value = +calculator.value.toString().slice(0, -1) || null;
+    // calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
   }
 }
 
