@@ -1,4 +1,5 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { updateScreen } from "../../screen/updateScreen";
 import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
 export class EqualsCommand extends Calculator {
@@ -15,9 +16,9 @@ export class EqualsCommand extends Calculator {
       calculator.operationSigns.at(-1) !== "=" &&
       calculator.operationSigns.at(-1) !== undefined
     ) {
-      // arithmeticCommandSelector(calculator.operationSigns.at(-1));
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
     } else {
-      // calculator.previousValue = 0;
+      calculator.previousValue = 0;
     }
   }
 
@@ -36,13 +37,15 @@ export class EqualsCommand extends Calculator {
     }
   }
 
-  undo() {
-    if (this.value === 0 || this.value === null) {
-      calculator.value = null;
-      calculator.previousValue = this.previousValue + this.value;
-    } else {
-      calculator.value = 0;
-      calculator.previousValue = this.value ?? this.previousValue + this.value;
-    }
+  undoWithOneArg() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
   }
 }
