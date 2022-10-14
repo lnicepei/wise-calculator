@@ -36,6 +36,7 @@ export class EqualsCommand extends Calculator {
       calculator.previousValue = 0;
     } else {
       calculator.operationSigns.pop();
+      this.executeWithTwoArgs();
     }
   }
 
