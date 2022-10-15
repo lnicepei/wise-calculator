@@ -26,7 +26,7 @@ export class FactorialCommand extends Calculator {
   }
 
   factorial(number) {
-    if (number <= 17000) {
+    if (number <= 17000 && number !== Infinity) {
       if (number < 0) {
         return -1;
       } else if (number === 0) {
