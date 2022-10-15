@@ -19,8 +19,12 @@ export class MemoryRecallCommand extends Calculator {
   }
 
   executeWithTwoArgs() {
-    calculator.value = +localStorage.getItem("memory");
-    updateScreen(calculator.value);
+    if (calculator.operationSigns.at(-1) !== "=") {
+      calculator.value = +localStorage.getItem("memory");
+      updateScreen(calculator.value);
+    } else {
+      this.executeWithOneArg();
+    }
   }
 
   undoWithOneArg() {
