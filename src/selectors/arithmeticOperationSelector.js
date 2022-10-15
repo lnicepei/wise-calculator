@@ -17,8 +17,10 @@ import { DivideCommand } from "../operations/arithmeticOperations/DivideCommand"
 import { MultiplyCommand } from "../operations/arithmeticOperations/MultiplyCommand";
 import { SubtractCommand } from "../operations/arithmeticOperations/SubtractCommand";
 import { EqualsCommand } from "../operations/arithmeticOperations/EqualsCommand";
-import { AllClearCommand } from "../operations/arithmeticOperations/AllClearCommand";
 import { AddCommand } from "../operations/arithmeticOperations/AddCommand";
+import { MemoryClearCommand } from "../operations/advancedOperations/MemoryClearCommand";
+import { MemoryMinusCommand } from "../operations/advancedOperations/MemoryMinusCommand";
+import { MemoryPlusCommand } from "../operations/advancedOperations/MemoryPlusCommand";
 
 const arithmeticOperations = document.querySelectorAll(
   ".arithmetic-operations, .equals, .undo"
@@ -41,6 +43,9 @@ export function arithmeticCommandSelector(event) {
     previousCommand instanceof SquareRootCommand ||
     previousCommand instanceof ThirdPowerRootCommand ||
     previousCommand instanceof MemoryRecallCommand ||
+    previousCommand instanceof MemoryClearCommand ||
+    previousCommand instanceof MemoryMinusCommand ||
+    previousCommand instanceof MemoryPlusCommand ||
     previousCommand instanceof SquaredCommand ||
     previousCommand instanceof CubedCommand ||
     previousCommand instanceof YRootCommand ||
@@ -52,7 +57,9 @@ export function arithmeticCommandSelector(event) {
     operation === "x^y"
   ) {
     switch (
-      (operation !== "undo" && calculator.operationSigns.at(-1)) ||
+      (operation !== "undo" &&
+        calculator.operationSigns.at(-1) !== "=" &&
+        calculator.operationSigns.at(-1)) ||
       operation
     ) {
       case "+":
