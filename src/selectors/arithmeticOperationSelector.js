@@ -1,6 +1,5 @@
 import { calculator } from "../calculator/calculator";
 import { NumberButtonCommand } from "../buttons/numbers";
-import { calculator } from "../calculator/calculator";
 import { CubedCommand } from "../operations/advancedOperations/CubedCommand";
 import { FactorialCommand } from "../operations/advancedOperations/FactorialCommand";
 import { MemoryClearCommand } from "../operations/advancedOperations/MemoryClearCommand";
