@@ -3,5 +3,24 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: black;
+  background-color: white;
+  transition: all 500ms;
+
+  &.lightMode {
+    background-color: black;
+  }
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  width: 40px;
+  height: 40px;
+  color: black;
+  cursor: pointer;
+
+  &.lightMode {
+    color: white;
+  }
 }

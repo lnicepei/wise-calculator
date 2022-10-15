@@ -1,26 +1,38 @@
 .buttons {
   display: flex;
   background-color: #757677;
+
+  &.lightMode {
+    background-color: #e0e0e0;
+  }
 }
 
 .numbers,
 .advanced-operations,
 .arithmetic-operations {
+  transition: all 500ms;
+
   div {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 100px;
-    height: 50px;
+    width: 150px;
+    height: 75px;
     font-family: "Poppins", sans-serif;
-    font-size: 2rem;
+    font-size: 3rem;
     color: white;
     border: 1px solid #48494a;
     user-select: none;
+    transition: all 500ms;
 
     &:active {
       box-shadow: inset 1px 1px 10px #333;
+    }
+
+    div.lightMode {
+      color: #2e2e2e;
+      border: 1px solid #a6a6a6;
     }
   }
 }
@@ -29,6 +41,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+
+  .number {
+    &.lightMode {
+      background-color: #e0e0e0;
+      color: #2e2e2e;
+      border: 1px solid #a6a6a6;
+    }
+  }
 }
 
 .advanced-operations {
@@ -36,14 +56,30 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
   background-color: #5a5b5c;
+
+  &.lightMode {
+    div {
+      color: #2e2e2e;
+      border: 1px solid #a6a6a6;
+    }
+    background-color: #d3d3d3;
+  }
 }
 
 .arithmetic-operations {
   display: flex;
   flex-direction: column;
   background-color: #fe9d08;
+
+  div.lightMode {
+    border: 1px solid #a6a6a6;
+  }
 }
 
 .numbers div:nth-child(12) {
   background-color: #fe9d08;
+
+  &.lightMode {
+    border: 1px solid #a6a6a6;
+  }
 }
