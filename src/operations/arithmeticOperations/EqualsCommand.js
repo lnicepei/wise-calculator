@@ -17,8 +17,6 @@ export class EqualsCommand extends Calculator {
       calculator.operationSigns.at(-1) !== undefined
     ) {
       arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    } else {
-      calculator.previousValue = 0;
     }
   }
 
