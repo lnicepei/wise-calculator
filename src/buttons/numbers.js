@@ -23,24 +23,41 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeWithOneArg() {
-    if (this.isNumberDot()) {
+    if (this.isNumberDot() && calculator.previousValue !== Infinity) {
       if (!this.includesDot(calculator.previousValue ?? 0)) {
         calculator.previousValue = this.previousValue + this.numberButton;
       }
     } else {
-      if (this.numberButton === "0") {
-        calculator.previousValue = calculator.previousValue + this.numberButton;
+      if (calculator.previousValue !== Infinity) {
+        if (this.numberButton === "0") {
+          if (calculator.previousValue !== 0)
+            calculator.previousValue =
+              calculator.previousValue + this.numberButton;
+        } else {
+          calculator.previousValue = +(
+            calculator.previousValue + this.numberButton
+          );
+        }
       } else {
-        calculator.previousValue = +(
-          calculator.previousValue + this.numberButton
-        );
+        calculator.value = null;
+        calculator.operationSigns = [];
+        calculator.previousValue = +this.numberButton;
       }
     }
     updateScreen(calculator.value);
   }
 
   executeWithTwoArgs() {
-    if (calculator.operationSigns.at(-1) === "=") {
+    if (
+      calculator.operationSigns.at(-1) === "=" ||
+      calculator.operationSigns.at(-1) === "x!" ||
+      calculator.operationSigns.at(-1) === "x^2" ||
+      calculator.operationSigns.at(-1) === "x^3" ||
+      calculator.operationSigns.at(-1) === "1/x" ||
+      calculator.operationSigns.at(-1) === "√x" ||
+      calculator.operationSigns.at(-1) === "3√x" ||
+      calculator.previousValue === Infinity
+    ) {
       calculator.operationSigns.pop();
       calculator.value = null;
       calculator.previousValue = null;
@@ -53,7 +70,8 @@ export class NumberButtonCommand extends Calculator {
         }
       } else {
         if (this.numberButton === "0") {
-          calculator.value = calculator.value + this.numberButton;
+          if (calculator.value !== 0)
+            calculator.value = calculator.value + this.numberButton;
         } else {
           calculator.value = +(calculator.value + this.numberButton);
         }
@@ -78,7 +96,6 @@ export class NumberButtonCommand extends Calculator {
 
   undoWithTwoArgs() {
     calculator.value = +calculator.value.toString().slice(0, -1) || null;
-    // calculator.previousValue = this.previousValue;
     updateScreen(calculator.value);
   }
 }
