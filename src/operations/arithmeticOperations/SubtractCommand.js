@@ -1,6 +1,5 @@
 import { calculator, Calculator } from "../../calculator/calculator";
 import { updateScreen } from "../../screen/updateScreen";
-import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
 export class SubtractCommand extends Calculator {
   constructor() {
@@ -9,7 +8,7 @@ export class SubtractCommand extends Calculator {
     this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() { }
+  executeFirstOperation() {}
 
   executeWithOneArg() {
     calculator.value = 0;

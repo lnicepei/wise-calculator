@@ -1,26 +1,25 @@
-import { calculator } from "../calculator/calculator";
-import { updateScreen } from "../screen/updateScreen";
 import { NumberButtonCommand } from "../buttons/numbers";
-import { advancedCommandSelector } from "./advancedOperationSelector";
-import { RevertCommand } from "../operations/advancedOperations/RevertCommand";
-import { FactorialCommand } from "../operations/advancedOperations/FactorialCommand";
-import { PowerOf10Command } from "../operations/advancedOperations/PowerOf10Command";
+import { calculator } from "../calculator/calculator";
 import { CubedCommand } from "../operations/advancedOperations/CubedCommand";
-import { SquaredCommand } from "../operations/advancedOperations/SquaredCommand";
-import { YRootCommand } from "../operations/advancedOperations/YRootCommand";
-import { MemoryRecallCommand } from "../operations/advancedOperations/MemoryRecallCommand";
-import { ThirdPowerRootCommand } from "../operations/advancedOperations/ThirdPowerRootCommand";
-import { SquareRootCommand } from "../operations/advancedOperations/SquareRootCommand";
-import { ReciprocateCommand } from "../operations/advancedOperations/ReciprocateCommand";
-import { PercentCommand } from "../operations/advancedOperations/PercentCommand";
-import { DivideCommand } from "../operations/arithmeticOperations/DivideCommand";
-import { MultiplyCommand } from "../operations/arithmeticOperations/MultiplyCommand";
-import { SubtractCommand } from "../operations/arithmeticOperations/SubtractCommand";
-import { EqualsCommand } from "../operations/arithmeticOperations/EqualsCommand";
-import { AddCommand } from "../operations/arithmeticOperations/AddCommand";
+import { FactorialCommand } from "../operations/advancedOperations/FactorialCommand";
 import { MemoryClearCommand } from "../operations/advancedOperations/MemoryClearCommand";
 import { MemoryMinusCommand } from "../operations/advancedOperations/MemoryMinusCommand";
 import { MemoryPlusCommand } from "../operations/advancedOperations/MemoryPlusCommand";
+import { MemoryRecallCommand } from "../operations/advancedOperations/MemoryRecallCommand";
+import { PercentCommand } from "../operations/advancedOperations/PercentCommand";
+import { PowerOf10Command } from "../operations/advancedOperations/PowerOf10Command";
+import { ReciprocateCommand } from "../operations/advancedOperations/ReciprocateCommand";
+import { RevertCommand } from "../operations/advancedOperations/RevertCommand";
+import { SquaredCommand } from "../operations/advancedOperations/SquaredCommand";
+import { SquareRootCommand } from "../operations/advancedOperations/SquareRootCommand";
+import { ThirdPowerRootCommand } from "../operations/advancedOperations/ThirdPowerRootCommand";
+import { YRootCommand } from "../operations/advancedOperations/YRootCommand";
+import { AddCommand } from "../operations/arithmeticOperations/AddCommand";
+import { DivideCommand } from "../operations/arithmeticOperations/DivideCommand";
+import { EqualsCommand } from "../operations/arithmeticOperations/EqualsCommand";
+import { MultiplyCommand } from "../operations/arithmeticOperations/MultiplyCommand";
+import { SubtractCommand } from "../operations/arithmeticOperations/SubtractCommand";
+import { advancedCommandSelector } from "./advancedOperationSelector";
 
 const arithmeticOperations = document.querySelectorAll(
   ".arithmetic-operations, .equals, .undo"
