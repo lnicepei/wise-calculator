@@ -1,6 +1,5 @@
 import { calculator, Calculator } from "../../calculator/calculator";
 import { updateScreen } from "../../screen/updateScreen";
-import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
 export class RevertCommand extends Calculator {
   constructor() {

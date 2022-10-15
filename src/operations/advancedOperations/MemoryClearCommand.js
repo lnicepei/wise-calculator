@@ -20,11 +20,11 @@ export class MemoryClearCommand extends Calculator {
     localStorage.clear();
   }
 
-  undoWithOneArg(){
-    localStorage.setItem("memory", this.memory)
+  undoWithOneArg() {
+    localStorage.setItem("memory", this.memory);
   }
 
-  undoWithTwoArgs(){
-    localStorage.setItem("memory", this.memory)
+  undoWithTwoArgs() {
+    localStorage.setItem("memory", this.memory);
   }
 }

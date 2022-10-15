@@ -1,5 +1,4 @@
 import { calculator } from "../calculator/calculator";
-import { updateScreen } from "../screen/updateScreen";
 import { NumberButtonCommand } from "../buttons/numbers";
 import { advancedCommandSelector } from "./advancedOperationSelector";
 import { RevertCommand } from "../operations/advancedOperations/RevertCommand";
