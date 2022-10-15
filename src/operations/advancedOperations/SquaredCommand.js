@@ -21,4 +21,16 @@ export class SquaredCommand extends Calculator {
     calculator.previousValue = calculator.previousValue ** 2;
     updateScreen();
   }
+
+  undoWithOneArg() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
 }

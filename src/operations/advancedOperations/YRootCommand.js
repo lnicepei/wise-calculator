@@ -27,5 +27,15 @@ export class YRootCommand extends Calculator {
     updateScreen();
   }
 
-  undo() {}
+  undoWithOneArg() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
 }

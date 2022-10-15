@@ -15,7 +15,10 @@ export class ThirdPowerRootCommand extends Calculator {
     if (calculator.previousValue >= 0) {
       calculator.previousValue = calculator.previousValue ** (1 / 3);
     } else {
-      calculator.previousValue = -(this.absVal(calculator.previousValue) ** (1 / 3));
+      calculator.previousValue = -(
+        this.absVal(calculator.previousValue) **
+        (1 / 3)
+      );
     }
     updateScreen();
   }
@@ -29,5 +32,17 @@ export class ThirdPowerRootCommand extends Calculator {
 
   absVal(value) {
     return value < 0 ? -value : value;
+  }
+
+  undoWithOneArg() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
+  }
+
+  undoWithTwoArgs() {
+    calculator.value = this.value;
+    calculator.previousValue = this.previousValue;
+    updateScreen(calculator.value);
   }
 }
