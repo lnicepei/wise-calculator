@@ -1,3 +1,4 @@
+import { calculator } from "../calculator/calculator";
 import { NumberButtonCommand } from "../buttons/numbers";
 import { calculator } from "../calculator/calculator";
 import { CubedCommand } from "../operations/advancedOperations/CubedCommand";
