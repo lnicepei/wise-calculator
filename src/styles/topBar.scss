@@ -4,7 +4,7 @@
   color: white;
   background-color: #48494a;
   font-family: "Poppins", sans-serif;
-  transition: all 500ms;
+  transition: background 500ms;
 
   &.lightMode {
     background-color: white;
@@ -19,7 +19,7 @@
   width: 100%;
   height: 10%;
   font-size: 4rem;
-  transition: all 500ms;
+  transition: background 500ms;
 
   &.lightMode {
     color: #2e2e2e;
@@ -34,7 +34,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 3rem;
   cursor: pointer;
-  transition: all 500ms;
+  transition: background 500ms;
 
   &.lightMode {
     color: #2e2e2e;
