@@ -4,10 +4,10 @@ body {
   justify-content: center;
   height: 100vh;
   background-color: white;
-  transition: all 500ms;
+  transition: background 500ms;
 
   &.lightMode {
-    background-color: black;
+    background-color: #48494a;
   }
 }
 
@@ -17,7 +17,7 @@ body {
   left: 40px;
   width: 40px;
   height: 40px;
-  color: black;
+  color: #5a5b5c;
   cursor: pointer;
 
   &.lightMode {
