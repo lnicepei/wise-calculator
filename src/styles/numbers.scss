@@ -25,8 +25,7 @@
     color: white;
     border: 1px solid #48494a;
     user-select: none;
-    transition: background 500ms;
-    transition: border-color 500ms;
+    transition: background 500ms, border-color 500ms;
 
     &:active {
       box-shadow: inset 1px 1px 10px #333;
