@@ -1,5 +1,5 @@
-import { calculator } from "../calculator/calculator";
 import { NumberButtonCommand } from "../buttons/numbers";
+import { calculator } from "../calculator/calculator";
 import { CubedCommand } from "../operations/advancedOperations/CubedCommand";
 import { FactorialCommand } from "../operations/advancedOperations/FactorialCommand";
 import { MemoryClearCommand } from "../operations/advancedOperations/MemoryClearCommand";
@@ -8,6 +8,7 @@ import { MemoryPlusCommand } from "../operations/advancedOperations/MemoryPlusCo
 import { MemoryRecallCommand } from "../operations/advancedOperations/MemoryRecallCommand";
 import { PercentCommand } from "../operations/advancedOperations/PercentCommand";
 import { PowerOf10Command } from "../operations/advancedOperations/PowerOf10Command";
+import { PowerOfYCommand } from "../operations/advancedOperations/PowerOfYCommand";
 import { ReciprocateCommand } from "../operations/advancedOperations/ReciprocateCommand";
 import { RevertCommand } from "../operations/advancedOperations/RevertCommand";
 import { SquaredCommand } from "../operations/advancedOperations/SquaredCommand";
@@ -50,6 +51,7 @@ export function arithmeticCommandSelector(event) {
     previousCommand instanceof YRootCommand ||
     previousCommand instanceof PowerOf10Command ||
     previousCommand instanceof FactorialCommand ||
+    previousCommand instanceof PowerOfYCommand ||
     operation === "undo" ||
     operation === "y√x" ||
     operation === "AC" ||
