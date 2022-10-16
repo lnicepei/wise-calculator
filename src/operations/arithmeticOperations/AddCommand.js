@@ -30,6 +30,6 @@ export class AddCommand extends Calculator {
   undoWithTwoArgs() {
     calculator.value = this.value;
     calculator.previousValue = this.previousValue;
-    updateScreen(calculator.previousValue);
+    updateScreen(calculator.value);
   }
 }
