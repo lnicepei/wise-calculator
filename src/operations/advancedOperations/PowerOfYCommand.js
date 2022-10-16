@@ -27,7 +27,7 @@ export class PowerOfYCommand extends Calculator {
       arithmeticCommandSelector(calculator.operationSigns.at(-1));
     if (calculator.value !== 0) {
       calculator.previousValue = calculator.previousValue ** calculator.value;
-      calculator.value = null;
+      calculator.value = 0;
     }
 
     updateScreen();
