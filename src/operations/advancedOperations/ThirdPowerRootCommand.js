@@ -25,7 +25,6 @@ export class ThirdPowerRootCommand extends Calculator {
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.value = null;
     calculator.previousValue = calculator.previousValue ** (1 / 3);
     updateScreen();
   }
