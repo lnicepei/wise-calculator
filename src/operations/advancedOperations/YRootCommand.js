@@ -22,7 +22,7 @@ export class YRootCommand extends Calculator {
     if (calculator.value !== 0) {
       calculator.previousValue =
         calculator.value ** (1 / calculator.previousValue);
-      calculator.value = 0;
+      calculator.value = null;
     }
     updateScreen();
   }
