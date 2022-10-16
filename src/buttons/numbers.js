@@ -23,12 +23,19 @@ export class NumberButtonCommand extends Calculator {
   }
 
   executeWithOneArg() {
-    if (this.isNumberDot() && calculator.previousValue !== Infinity) {
+    if (
+      this.isNumberDot() &&
+      calculator.previousValue !== Infinity &&
+      calculator.previousValue !== -Infinity
+    ) {
       if (!this.includesDot(calculator.previousValue ?? 0)) {
         calculator.previousValue = this.previousValue + this.numberButton;
       }
     } else {
-      if (calculator.previousValue !== Infinity) {
+      if (
+        calculator.previousValue !== Infinity &&
+        calculator.previousValue !== -Infinity
+      ) {
         if (this.numberButton === "0") {
           if (calculator.previousValue !== 0)
             calculator.previousValue =
@@ -56,7 +63,8 @@ export class NumberButtonCommand extends Calculator {
       calculator.operationSigns.at(-1) === "1/x" ||
       calculator.operationSigns.at(-1) === "√x" ||
       calculator.operationSigns.at(-1) === "3√x" ||
-      calculator.previousValue === Infinity
+      calculator.previousValue === Infinity ||
+      calculator.previousValue === -Infinity
     ) {
       calculator.operationSigns.pop();
       calculator.value = null;
