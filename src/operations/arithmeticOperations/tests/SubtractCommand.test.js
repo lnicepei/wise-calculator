@@ -1,10 +1,10 @@
-import { calculator } from "../../calculator/calculator";
+import { calculator } from "../../../calculator/calculator";
 
 document.body.innerHTML = "<div class=screen></div>";
 
 const {
   SubtractCommand,
-} = require("../../operations/arithmeticOperations/SubtractCommand");
+} = require("../SubtractCommand");
 
 test.skip("should not change initial values of the calculator on first execution", () => {
   calculator.execute(new SubtractCommand());

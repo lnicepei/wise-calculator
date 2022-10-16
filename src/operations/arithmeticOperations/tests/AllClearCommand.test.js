@@ -1,10 +1,10 @@
-import { calculator } from "../../calculator/calculator";
+import { calculator } from "../../../calculator/calculator";
 
 document.body.innerHTML = "<div class=screen></div>";
 
 const {
   AllClearCommand,
-} = require("../../operations/arithmeticOperations/AllClearCommand");
+} = require("../AllClearCommand");
 
 test.skip("should clear up calculator values", () => {
   calculator.execute(new AllClearCommand());
