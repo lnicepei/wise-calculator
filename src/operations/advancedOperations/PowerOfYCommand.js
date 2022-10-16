@@ -1,5 +1,6 @@
 import { calculator, Calculator } from "../../calculator/calculator";
 import { updateScreen } from "../../screen/updateScreen";
+import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
 export class PowerOfYCommand extends Calculator {
   constructor() {
@@ -19,8 +20,16 @@ export class PowerOfYCommand extends Calculator {
   }
 
   executeWithTwoArgs() {
-    calculator.previousValue = calculator.previousValue ** calculator.value;
-    calculator.value = 0;
+    if (
+      calculator.operationSigns.at(-1) !== undefined &&
+      calculator.operationSigns.at(-1) !== "x^y"
+    )
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    if (calculator.value !== 0) {
+      calculator.previousValue = calculator.previousValue ** calculator.value;
+      calculator.value = 0;
+    }
+
     updateScreen();
   }
 

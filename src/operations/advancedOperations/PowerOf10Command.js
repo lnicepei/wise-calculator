@@ -20,7 +20,8 @@ export class PowerOf10Command extends Calculator {
   }
 
   executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    if (calculator.value !== 0)
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
     calculator.previousValue = 10 ** calculator.previousValue;
     updateScreen();
   }
