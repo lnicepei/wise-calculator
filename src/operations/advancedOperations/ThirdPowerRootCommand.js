@@ -25,7 +25,14 @@ export class ThirdPowerRootCommand extends Calculator {
 
   executeWithTwoArgs() {
     arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.previousValue = calculator.previousValue ** (1 / 3);
+    if (calculator.previousValue >= 0) {
+      calculator.previousValue = calculator.previousValue ** (1 / 3);
+    } else {
+      calculator.previousValue = -(
+        this.absVal(calculator.previousValue) **
+        (1 / 3)
+      );
+    }
     updateScreen();
   }
 
