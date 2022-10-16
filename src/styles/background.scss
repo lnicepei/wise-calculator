@@ -9,6 +9,13 @@ body {
   &.lightMode {
     background-color: #48494a;
   }
+
+  @media only screen and (max-width: 600px) {
+    & {
+      height: auto;
+      margin: 0;
+    }
+  }
 }
 
 .theme-toggle {
@@ -22,5 +29,19 @@ body {
 
   &.lightMode {
     color: white;
+  }
+
+  @media only screen and (max-width: 600px) {
+    & {
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      color: white;
+    }
+
+    &.lightMode {
+      color: #5a5b5c;
+    }
   }
 }
