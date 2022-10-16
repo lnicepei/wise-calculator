@@ -17,7 +17,8 @@ export class PercentCommand extends Calculator {
   }
 
   executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
+    if (calculator.value !== 0)
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
     calculator.previousValue = calculator.previousValue / 100;
     updateScreen();
   }
