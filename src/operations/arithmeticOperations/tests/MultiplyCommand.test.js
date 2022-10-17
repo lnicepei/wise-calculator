@@ -2,9 +2,7 @@ import { calculator } from "../../../calculator/calculator";
 
 document.body.innerHTML = "<div class=screen></div>";
 
-const {
-  MultiplyCommand,
-} = require("../MultiplyCommand");
+const { MultiplyCommand } = require("../MultiplyCommand");
 
 test.skip("should not change initial values of the calculator on first execution", () => {
   calculator.execute(new MultiplyCommand());

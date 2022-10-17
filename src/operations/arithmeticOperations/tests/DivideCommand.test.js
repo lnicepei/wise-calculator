@@ -2,9 +2,7 @@ import { calculator } from "../../../calculator/calculator";
 
 document.body.innerHTML = "<div class=screen></div>";
 
-const {
-  DivideCommand,
-} = require("../DivideCommand");
+const { DivideCommand } = require("../DivideCommand");
 
 test.skip("should not change initial values of the calculator on first execution", () => {
   calculator.execute(new DivideCommand());

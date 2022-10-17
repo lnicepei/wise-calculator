@@ -2,9 +2,7 @@ import { calculator } from "../../../calculator/calculator";
 
 document.body.innerHTML = "<div class=screen></div>";
 
-const {
-  AllClearCommand,
-} = require("../AllClearCommand");
+const { AllClearCommand } = require("../AllClearCommand");
 
 test.skip("should clear up calculator values", () => {
   calculator.execute(new AllClearCommand());
