@@ -6,8 +6,9 @@
 ### How to run the app
 
 1. Clone this repository by running `$ git clone https://github.com/lnicepei/wise-calculator`
-2. Run `cd calculator`
-3. Run `npm run start`
+2. Run `npm i`
+3. Run `cd calculator`
+4. Run `npm run start`
 
 ### Other scripts
 
