@@ -20,8 +20,12 @@ export class FactorialCommand extends Calculator {
   }
 
   executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.previousValue = this.factorial(calculator.previousValue);
+    if (calculator.value !== 0) {
+      arithmeticCommandSelector(calculator.operationSigns.at(-1));
+      calculator.previousValue = this.factorial(calculator.previousValue);
+    } else {
+      this.executeWithOneArg();
+    }
     updateScreen();
   }
 
