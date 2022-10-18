@@ -1,22 +1,4 @@
-import { NumberButtonCommand } from "../buttons/numbers";
 import { calculator } from "../calculator/calculator";
-import {
-  CubedCommand,
-  FactorialCommand,
-  MemoryClearCommand,
-  MemoryMinusCommand,
-  MemoryPlusCommand,
-  MemoryRecallCommand,
-  PercentCommand,
-  PowerOf10Command,
-  PowerOfYCommand,
-  ReciprocateCommand,
-  RevertCommand,
-  SquaredCommand,
-  SquareRootCommand,
-  ThirdPowerRootCommand,
-  YRootCommand,
-} from "../operations/advancedOperations/index";
 import {
   AddCommand,
   DivideCommand,
@@ -39,23 +21,12 @@ export function arithmeticCommandSelector(event) {
   const previousCommand = calculator.operations.at(-1);
 
   if (
-    previousCommand instanceof NumberButtonCommand ||
-    previousCommand instanceof EqualsCommand ||
-    previousCommand instanceof ReciprocateCommand ||
-    previousCommand instanceof RevertCommand ||
-    previousCommand instanceof PercentCommand ||
-    previousCommand instanceof SquareRootCommand ||
-    previousCommand instanceof ThirdPowerRootCommand ||
-    previousCommand instanceof MemoryRecallCommand ||
-    previousCommand instanceof MemoryClearCommand ||
-    previousCommand instanceof MemoryMinusCommand ||
-    previousCommand instanceof MemoryPlusCommand ||
-    previousCommand instanceof SquaredCommand ||
-    previousCommand instanceof CubedCommand ||
-    previousCommand instanceof YRootCommand ||
-    previousCommand instanceof PowerOf10Command ||
-    previousCommand instanceof FactorialCommand ||
-    previousCommand instanceof PowerOfYCommand ||
+    !(
+      previousCommand instanceof AddCommand ||
+      previousCommand instanceof SubtractCommand ||
+      previousCommand instanceof MultiplyCommand ||
+      previousCommand instanceof DivideCommand
+    ) ||
     operation === "undo" ||
     operation === "y√x" ||
     operation === "AC" ||
@@ -89,6 +60,7 @@ export function arithmeticCommandSelector(event) {
         advancedCommandSelector(calculator.operationSigns.at(-1) || operation);
         break;
     }
+
     if (operation !== "y√x" && operation !== "x^y" && operation !== "undo")
       calculator.operationSigns.push(operation);
   } else {
