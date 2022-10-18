@@ -26,10 +26,6 @@ body {
   height: 100vh;
   background-color: var(--bg);
   transition: background 500ms;
-
-  // Задать палитру с перменными и подменять её на themeToggle
-
-  // И переписать все контейнеры, используя flex-wrap: wrap и flex: 0 1 x%
 }
 
 .theme-toggle {
@@ -52,6 +48,5 @@ body {
     left: 0;
     width: 20px;
     height: 20px;
-
   }
 }
