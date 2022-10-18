@@ -1,19 +1,14 @@
 .buttons {
   display: flex;
-  background-color: #757677;
   transition: background 500ms;
   height: auto;
 
-  &.lightMode {
-    background-color: #e0e0e0;
-  }
+  background-color: var(--numbers-bg);
 
   @media only screen and (max-width: 600px) {
-    & {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-    }
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
   }
 }
 
@@ -26,31 +21,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
     width: 150px;
     height: 75px;
-    font-family: "Poppins", sans-serif;
+    text-align: center;
     font-size: 3rem;
-    color: white;
-    border: 1px solid #48494a;
+    border: 1px solid var(--border);
     user-select: none;
-    transition: background 500ms, border-color 500ms;
+    transition: background 500ms, border-color 500ms, color 500ms;
 
     &:active {
       box-shadow: inset 1px 1px 10px #333;
     }
 
-    div.lightMode {
-      color: #2e2e2e;
-      border: 1px solid #a6a6a6;
-    }
-
     @media only screen and (max-width: 600px) {
-      & {
-        width: auto;
-        height: calc(calc(100vh - 100px) / 8);
-        font-size: 2.5rem;
-      }
+      width: auto;
+      height: calc((100vh - 100px) / 8);
+      font-size: 2.5rem;
     }
   }
 }
@@ -61,16 +47,19 @@
   grid-template-rows: repeat(3, 1fr);
 
   .number {
-    &.lightMode {
-      background-color: #e0e0e0;
-      color: #2e2e2e;
-      border: 1px solid #a6a6a6;
-    }
+    color: var(--numbers);
   }
 
   @media only screen and (max-width: 600px) {
-    & {
-      grid-column: 1 / 4;
+    grid-column: 1 / 4;
+  }
+
+  .equals {
+    color: white;
+    background-color: var(--arithmetic-operation);
+
+    &.lightMode {
+      border: 1px solid #a6a6a6;
     }
   }
 }
@@ -79,43 +68,22 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  background-color: #5a5b5c;
+  background-color: var(--advanced-operations);
 
-  &.lightMode {
-    div {
-      color: #2e2e2e;
-      border: 1px solid #a6a6a6;
-    }
-    background-color: #d3d3d3;
-  }
+  color: var(--numbers);
 
   @media only screen and (max-width: 600px) {
-    & {
-      grid-column: 1 / 5;
-    }
+    grid-column: 1 / 5;
   }
 }
 
 .arithmetic-operations {
   display: flex;
   flex-direction: column;
-  background-color: #fe9d08;
-
-  div.lightMode {
-    border: 1px solid #a6a6a6;
-  }
+  background-color: var(--arithmetic-operation);
+  color: white;
 
   @media only screen and (max-width: 600px) {
-    & {
-      grid-column: 4 / 5;
-    }
-  }
-}
-
-.numbers div:nth-child(12) {
-  background-color: #fe9d08;
-
-  &.lightMode {
-    border: 1px solid #a6a6a6;
+    grid-column: 4 / 5;
   }
 }

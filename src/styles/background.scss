@@ -1,21 +1,35 @@
+:root {
+  --bg: white;
+  --theme-toggle: #5a5b5c;
+  --numbers-bg: #757677;
+  --numbers: white;
+  --calculator: #48494a;
+  --border: #48494a;
+  --arithmetic-operation: #fe9d08;
+  --advanced-operations: #5a5b5c;
+}
+
+.lightMode {
+  --bg: #48494a;
+  --theme-toggle: white;
+  --numbers-bg: #e0e0e0;
+  --numbers: black;
+  --calculator: white;
+  --border: #a6a6a6;
+  --advanced-operations: #d3d3d3;
+}
+
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: white;
+  background-color: var(--bg);
   transition: background 500ms;
 
-  &.lightMode {
-    background-color: #48494a;
-  }
+  // Задать палитру с перменными и подменять её на themeToggle
 
-  @media only screen and (max-width: 600px) {
-    & {
-      height: auto;
-      margin: 0;
-    }
-  }
+  // И переписать все контейнеры, используя flex-wrap: wrap и flex: 0 1 x%
 }
 
 .theme-toggle {
@@ -24,24 +38,20 @@ body {
   left: 40px;
   width: 40px;
   height: 40px;
-  color: #5a5b5c;
   cursor: pointer;
+  transition: color 500ms;
+  color: var(--theme-toggle);
 
-  &.lightMode {
-    color: white;
+  svg {
+    width: 40px;
+    height: 40px;
   }
 
   @media only screen and (max-width: 600px) {
-    & {
-      top: 0;
-      left: 0;
-      width: 20px;
-      height: 20px;
-      color: white;
-    }
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
 
-    &.lightMode {
-      color: #5a5b5c;
-    }
   }
 }
