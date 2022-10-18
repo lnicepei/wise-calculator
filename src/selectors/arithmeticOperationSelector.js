@@ -1,25 +1,29 @@
 import { NumberButtonCommand } from "../buttons/numbers";
 import { calculator } from "../calculator/calculator";
-import { CubedCommand } from "../operations/advancedOperations/CubedCommand";
-import { FactorialCommand } from "../operations/advancedOperations/FactorialCommand";
-import { MemoryClearCommand } from "../operations/advancedOperations/MemoryClearCommand";
-import { MemoryMinusCommand } from "../operations/advancedOperations/MemoryMinusCommand";
-import { MemoryPlusCommand } from "../operations/advancedOperations/MemoryPlusCommand";
-import { MemoryRecallCommand } from "../operations/advancedOperations/MemoryRecallCommand";
-import { PercentCommand } from "../operations/advancedOperations/PercentCommand";
-import { PowerOf10Command } from "../operations/advancedOperations/PowerOf10Command";
-import { PowerOfYCommand } from "../operations/advancedOperations/PowerOfYCommand";
-import { ReciprocateCommand } from "../operations/advancedOperations/ReciprocateCommand";
-import { RevertCommand } from "../operations/advancedOperations/RevertCommand";
-import { SquaredCommand } from "../operations/advancedOperations/SquaredCommand";
-import { SquareRootCommand } from "../operations/advancedOperations/SquareRootCommand";
-import { ThirdPowerRootCommand } from "../operations/advancedOperations/ThirdPowerRootCommand";
-import { YRootCommand } from "../operations/advancedOperations/YRootCommand";
-import { AddCommand } from "../operations/arithmeticOperations/AddCommand";
-import { DivideCommand } from "../operations/arithmeticOperations/DivideCommand";
-import { EqualsCommand } from "../operations/arithmeticOperations/EqualsCommand";
-import { MultiplyCommand } from "../operations/arithmeticOperations/MultiplyCommand";
-import { SubtractCommand } from "../operations/arithmeticOperations/SubtractCommand";
+import {
+  CubedCommand,
+  FactorialCommand,
+  MemoryClearCommand,
+  MemoryMinusCommand,
+  MemoryPlusCommand,
+  MemoryRecallCommand,
+  PercentCommand,
+  PowerOf10Command,
+  PowerOfYCommand,
+  ReciprocateCommand,
+  RevertCommand,
+  SquaredCommand,
+  SquareRootCommand,
+  ThirdPowerRootCommand,
+  YRootCommand,
+} from "../operations/advancedOperations/index";
+import {
+  AddCommand,
+  DivideCommand,
+  EqualsCommand,
+  MultiplyCommand,
+  SubtractCommand,
+} from "../operations/arithmeticOperations/index";
 import { advancedCommandSelector } from "./advancedOperationSelector";
 
 const arithmeticOperations = document.querySelectorAll(
