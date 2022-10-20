@@ -1,6 +1,8 @@
 import { updateScreen } from "../screen/updateScreen";
 import { arithmeticCommandSelector } from "../selectors/arithmeticOperationSelector";
 import { calculator, Calculator } from "./calculator";
+import { NumberButtonCommand } from "../buttons/numbers";
+import { UnaryCommand } from "./unaryOperations";
 
 export class BinaryCommand extends Calculator {
   constructor() {
@@ -11,7 +13,12 @@ export class BinaryCommand extends Calculator {
 
   execute() {
     if (this.validate() && calculator.operationSigns.length === 2) {
-      arithmeticCommandSelector(calculator.operationSigns.shift());
+      if (
+        calculator.operations.at(-2) instanceof NumberButtonCommand ||
+        calculator.operations.at(-2) instanceof UnaryCommand
+      ) {
+        arithmeticCommandSelector(calculator.operationSigns.shift());
+      }
     }
   }
 
@@ -22,9 +29,7 @@ export class BinaryCommand extends Calculator {
   }
 
   validate() {
-    return (
-      calculator.previousValue !== null && calculator.value !== null
-    );
+    return calculator.previousValue !== null && calculator.value !== null;
   }
 
   validateFirstPress() {
