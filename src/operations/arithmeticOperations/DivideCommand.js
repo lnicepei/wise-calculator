@@ -9,7 +9,7 @@ export class DivideCommand extends BinaryCommand {
 
   execute() {
     super.execute();
-    if (this.validate()) {
+    if (this.validate() && this.wasDividedByZero()) {
       calculator.previousValue = calculator.previousValue / calculator.value;
       updateScreen();
     }
@@ -17,13 +17,10 @@ export class DivideCommand extends BinaryCommand {
   }
 
   wasDividedByZero() {
-    if (
-      Number.isNaN(calculator.previousValue) ||
-      calculator.previousValue === Infinity
-    ) {
-      alert("You can't divide by zero!");
-    } else {
-      updateScreen();
+    if (calculator.value === 0) {
+      alert("You cannot divide by zero!");
+      return false;
     }
+    return true;
   }
 }
