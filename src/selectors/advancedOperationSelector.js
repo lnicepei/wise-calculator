@@ -44,9 +44,6 @@ export function advancedCommandSelector(event) {
     case "3√x":
       calculator.execute(new ThirdPowerRootCommand());
       break;
-    case "y√x":
-      calculator.execute(new YRootCommand());
-      break;
     case "mr":
       calculator.execute(new MemoryRecallCommand());
       break;
@@ -68,9 +65,6 @@ export function advancedCommandSelector(event) {
     case "10^x":
       calculator.execute(new PowerOf10Command());
       break;
-    case "x^y":
-      calculator.execute(new PowerOfYCommand());
-      break;
     case "x!":
       calculator.execute(new FactorialCommand());
       break;
@@ -82,8 +76,8 @@ export function advancedCommandSelector(event) {
       break;
   }
 
-  if (operation === "y√x" || operation === "x^y")
-    calculator.operationSigns.push(operation);
+  // if (operation === "y√x" || operation === "x^y")
+  //   calculator.operationSigns.push(operation);
 
   console.log(calculator);
 }
