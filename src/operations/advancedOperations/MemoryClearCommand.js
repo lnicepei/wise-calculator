@@ -1,4 +1,3 @@
-import { calculator, Calculator } from "../../calculator/calculator";
 import { UnaryCommand } from "../../calculator/unaryOperations";
 
 export class MemoryClearCommand extends UnaryCommand {
@@ -7,11 +6,9 @@ export class MemoryClearCommand extends UnaryCommand {
     this.memory = +localStorage.getItem("memory");
   }
 
-
   execute() {
     localStorage.clear();
   }
-
 
   undo() {
     localStorage.setItem("memory", this.memory);

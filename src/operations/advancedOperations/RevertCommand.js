@@ -1,4 +1,4 @@
-import { calculator, Calculator } from "../../calculator/calculator";
+import { calculator } from "../../calculator/calculator";
 import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 
