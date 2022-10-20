@@ -11,10 +11,9 @@ import {
   MultiplyCommand,
   SubtractCommand,
 } from "../operations/arithmeticOperations/index";
-import { advancedCommandSelector } from "./advancedOperationSelector";
 
 const arithmeticOperations = document.querySelectorAll(
-  ".arithmetic-operations, .undo"
+  ".arithmetic-operations"
 );
 
 for (let element of arithmeticOperations) {
@@ -49,15 +48,11 @@ export function arithmeticCommandSelector(event) {
       case "y√x":
         calculator.execute(new YRootCommand());
         break;
-      case "undo":
-        calculator.undo();
-        break;
       default:
-        advancedCommandSelector(calculator.operationSigns.pop() || operation);
         break;
     }
   }
   console.log(calculator);
-  if (operation !== "undo" && operation !== "=")
+  if (operation !== "=")
     calculator.operationSigns.push(operation);
 }
