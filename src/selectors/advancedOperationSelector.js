@@ -9,17 +9,18 @@ import {
   MemoryRecallCommand,
   PercentCommand,
   PowerOf10Command,
-  PowerOfYCommand,
   ReciprocateCommand,
   RevertCommand,
   SquaredCommand,
   SquareRootCommand,
   ThirdPowerRootCommand,
-  YRootCommand,
 } from "../operations/advancedOperations/index";
-import { AllClearCommand } from "../operations/arithmeticOperations/index";
+import {
+  AllClearCommand,
+  EqualsCommand,
+} from "../operations/arithmeticOperations/index";
 
-const advancedOperations = document.querySelectorAll(".advanced-operations");
+const advancedOperations = document.querySelectorAll(".advanced-operations, .equals");
 
 for (let element of advancedOperations) {
   element.addEventListener("click", advancedCommandSelector);
@@ -70,6 +71,9 @@ export function advancedCommandSelector(event) {
       break;
     case "AC":
       calculator.execute(new AllClearCommand());
+      break;
+    case "=":
+      calculator.execute(new EqualsCommand());
       break;
     default:
       arithmeticCommandSelector(operation);
