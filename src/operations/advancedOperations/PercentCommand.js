@@ -1,36 +1,17 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
-export class PercentCommand extends Calculator {
+export class PercentCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
 
-  executeWithOneArg() {
-    calculator.previousValue = this.previousValue / 100;
-    updateScreen();
-  }
-
-  executeWithTwoArgs() {
-    if (calculator.value !== 0)
-      arithmeticCommandSelector(calculator.operationSigns.at(-1));
+  execute() {
+    super.execute();
     calculator.previousValue = calculator.previousValue / 100;
-    updateScreen();
-  }
-
-  undoWithOneArg() {
-    calculator.previousValue = calculator.previousValue * 100;
-    updateScreen();
-  }
-
-  undoWithTwoArgs() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
     updateScreen();
   }
 }

@@ -1,36 +1,22 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
-export class FactorialCommand extends Calculator {
+export class FactorialCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {
-    calculator.previousValue = 1;
-    updateScreen();
-  }
 
-  executeWithOneArg() {
+  execute() {
+    super.execute();
     calculator.previousValue = this.factorial(calculator.previousValue);
     updateScreen();
   }
 
-  executeWithTwoArgs() {
-    if (calculator.value !== 0) {
-      arithmeticCommandSelector(calculator.operationSigns.at(-1));
-      calculator.previousValue = this.factorial(calculator.previousValue);
-    } else {
-      this.executeWithOneArg();
-    }
-    updateScreen();
-  }
-
   factorial(number) {
-    if (number <= 17000 && number !== Infinity) {
+    if (number <= 17000 && number !== Infinity && number % 1 === 0) {
       if (number < 0) {
         return -1;
       } else if (number === 0) {
@@ -39,19 +25,9 @@ export class FactorialCommand extends Calculator {
         return number * this.factorial(number - 1);
       }
     } else {
-      alert("The number is too big for finding its factorial");
+      alert("Invalid number for finding its factorial");
       return number;
     }
   }
 
-  undoWithOneArg() {
-    calculator.previousValue = this.previousValue;
-    updateScreen();
-  }
-
-  undoWithTwoArgs() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen();
-  }
 }

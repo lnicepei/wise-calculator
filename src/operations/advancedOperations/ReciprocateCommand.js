@@ -1,38 +1,24 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
-export class ReciprocateCommand extends Calculator {
+export class ReciprocateCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {
-    alert("You cannot divide by zero!");
-  }
-
-  executeWithOneArg() {
-    calculator.previousValue = 1 / calculator.previousValue;
+  execute() {
+    super.execute();
+    if (this.validate()) {
+      calculator.previousValue = 1 / calculator.previousValue;
+    } else {
+      alert("You cannot divide by zero");
+    }
     updateScreen();
   }
 
-  executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.previousValue = 1 / calculator.previousValue;
-    updateScreen();
-  }
-
-  undoWithOneArg() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
-  }
-
-  undoWithTwoArgs() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
+  validate() {
+    return +calculator.previousValue !== 0;
   }
 }

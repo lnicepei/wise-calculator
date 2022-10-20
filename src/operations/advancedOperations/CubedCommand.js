@@ -1,34 +1,18 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
-export class CubedCommand extends Calculator {
+export class CubedCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
 
-  executeWithOneArg() {
+  execute() {
+    super.execute();
     calculator.previousValue = calculator.previousValue ** 3;
     updateScreen();
   }
 
-  executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.previousValue = calculator.previousValue ** 3;
-    updateScreen();
-  }
-
-  undoWithOneArg() {
-    calculator.previousValue = calculator.previousValue ** (1 / 3);
-    updateScreen();
-  }
-
-  undoWithTwoArgs() {
-    calculator.previousValue = calculator.previousValue ** (1 / 3);
-    updateScreen();
-  }
 }

@@ -1,36 +1,16 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
-export class SquaredCommand extends Calculator {
+export class SquaredCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
-
-  executeWithOneArg() {
+  execute() {
+    super.execute();
     calculator.previousValue = calculator.previousValue ** 2;
     updateScreen();
-  }
-
-  executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    calculator.previousValue = calculator.previousValue ** 2;
-    updateScreen();
-  }
-
-  undoWithOneArg() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
-  }
-
-  undoWithTwoArgs() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
   }
 }

@@ -1,37 +1,15 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
 
-export class RevertCommand extends Calculator {
+export class RevertCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
-
-  executeWithOneArg() {
-    calculator.previousValue = -this.previousValue;
-    updateScreen();
-  }
-
-  executeWithTwoArgs() {
-    if (calculator.value !== 0) {
-      calculator.value = -calculator.value;
-      updateScreen(calculator.value);
-    } else {
-      calculator.previousValue = -calculator.previousValue;
-      updateScreen();
-    }
-  }
-
-  undoWithOneArg() {
+  execute() {
+    super.execute();
     calculator.previousValue = -calculator.previousValue;
     updateScreen();
-  }
-
-  undoWithTwoArgs() {
-    calculator.value = -calculator.value;
-    updateScreen(calculator.value);
   }
 }
