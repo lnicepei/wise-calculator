@@ -1,31 +1,14 @@
-import { calculator, Calculator } from "../../calculator/calculator";
+import { calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 import { updateScreen } from "../../screen/updateScreen";
-import { arithmeticCommandSelector } from "../../selectors/arithmeticOperationSelector";
 
-export class ThirdPowerRootCommand extends Calculator {
+export class ThirdPowerRootCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
   }
 
-  executeFirstOperation() {}
-
-  executeWithOneArg() {
-    if (calculator.previousValue >= 0) {
-      calculator.previousValue = calculator.previousValue ** (1 / 3);
-    } else {
-      calculator.previousValue = -(
-        this.absVal(calculator.previousValue) **
-        (1 / 3)
-      );
-    }
-    updateScreen();
-  }
-
-  executeWithTwoArgs() {
-    arithmeticCommandSelector(calculator.operationSigns.at(-1));
-    if (calculator.previousValue >= 0) {
+  execute() {
+    if (this.validate()) {
       calculator.previousValue = calculator.previousValue ** (1 / 3);
     } else {
       calculator.previousValue = -(
@@ -40,15 +23,7 @@ export class ThirdPowerRootCommand extends Calculator {
     return value < 0 ? -value : value;
   }
 
-  undoWithOneArg() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
-  }
-
-  undoWithTwoArgs() {
-    calculator.value = this.value;
-    calculator.previousValue = this.previousValue;
-    updateScreen(calculator.value);
+  validate() {
+    return calculator.previousValue >= 0;
   }
 }
