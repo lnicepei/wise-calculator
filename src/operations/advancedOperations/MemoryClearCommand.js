@@ -1,30 +1,19 @@
 import { calculator, Calculator } from "../../calculator/calculator";
+import { UnaryCommand } from "../../calculator/unaryOperations";
 
-export class MemoryClearCommand extends Calculator {
+export class MemoryClearCommand extends UnaryCommand {
   constructor() {
     super();
-    this.value = calculator.value;
-    this.previousValue = calculator.previousValue;
     this.memory = +localStorage.getItem("memory");
   }
 
-  executeFirstOperation() {
+
+  execute() {
     localStorage.clear();
   }
 
-  executeWithOneArg() {
-    localStorage.clear();
-  }
 
-  executeWithTwoArgs() {
-    localStorage.clear();
-  }
-
-  undoWithOneArg() {
-    localStorage.setItem("memory", this.memory);
-  }
-
-  undoWithTwoArgs() {
+  undo() {
     localStorage.setItem("memory", this.memory);
   }
 }
