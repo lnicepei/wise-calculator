@@ -20,7 +20,9 @@ import {
   EqualsCommand,
 } from "../operations/arithmeticOperations/index";
 
-const advancedOperations = document.querySelectorAll(".advanced-operations, .equals");
+const advancedOperations = document.querySelectorAll(
+  ".advanced-operations, .equals, .undo"
+);
 
 for (let element of advancedOperations) {
   element.addEventListener("click", advancedCommandSelector);
@@ -74,6 +76,9 @@ export function advancedCommandSelector(event) {
       break;
     case "=":
       calculator.execute(new EqualsCommand());
+      break;
+    case "undo":
+      calculator.undo();
       break;
     default:
       arithmeticCommandSelector(operation);
